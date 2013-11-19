@@ -27,7 +27,7 @@ $(document).ready(function () {
     }
 
     // Вывод контактов
-    function vivodContacts() {
+    function showContacts() {
         $('.table-contacts .table tbody').find($('tr')).remove();
         $.each(contacts, function (index, contact) {
 
@@ -37,11 +37,12 @@ $(document).ready(function () {
             blockKnopok.append(buttonEdit);
             blockKnopok.append(buttonDelit);
 
-            var tr = $("<tr>");
+            var tr = $("<tr>").data("id",contact.phoneNumber);
             var tdFirstName = $("<td>").text(contact.firstName);
             var tdLastName = $("<td>").text(contact.lastName);
             var tdOperator = $("<td>").text(contact.operator);
-            var tdPhoneNumber = $("<td>").addClass("tdPhon").text(contact.phoneNumber);
+            // var tdPhoneNumber = $("<td>").addClass("tdPhon").text(contact.phoneNumber);
+            var tdPhoneNumber = $("<td>").text(contact.phoneNumber);
             var tdAction = $("<td>").html(blockKnopok);
 
             tr.append(tdFirstName);
@@ -54,7 +55,7 @@ $(document).ready(function () {
         })
 
     }
-    vivodContacts();
+    showContacts();
 
     // Открытие и закрытие формы добовления контакта
     // Открытие
@@ -102,14 +103,14 @@ $(document).ready(function () {
             };
         })
         contacts.splice(indexDelit, 1);
-        vivodContacts();
+        showContacts();
     }
     $('body').on('click', '.table-contacts .danger', function (e) {
         var target = $(e.currentTarget);
-        var phoneNumber = target.closest('tr').find('.tdPhon').text();
+        var phoneNumber = target.closest('tr').data("id");
+        console.log(phoneNumber);
         remove(phoneNumber);
     })
-
 
     // Редактирование контакта
     var oldPhoneNumber = 911;
@@ -127,7 +128,7 @@ $(document).ready(function () {
                 contacts[index]['phoneNumber'] = newPhoneNumber;
             };
         })
-        vivodContacts();
+        showContacts();
     }
     $('body').click(function (argument) {
         redactContact(oldPhoneNumber, newFirstName, newLastName, newOperator, newPhoneNumber);
