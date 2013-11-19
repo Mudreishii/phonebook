@@ -62,7 +62,7 @@ function vivodContacts () {
 vivodContacts();
 
 
-
+// фывфывфвфвы
 // Открытие и закрытие формы добовления контакта
 // Открытие
 $('.add-contact').click(function  () {
