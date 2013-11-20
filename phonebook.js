@@ -15,6 +15,9 @@ $(document).ready(function () {
     var pokazForm = 0; // Счётчик открытия и закрытия формы
 
     // Добовление контакта
+    function add(newContact) {
+        contacts.push(newContact);
+    }
     add({
         firstName: "John",
         lastName: "Resiz",
@@ -22,18 +25,14 @@ $(document).ready(function () {
         phoneNumber: "098239146"
     });
 
-    function add(newContact) {
-        contacts.push(newContact);
-    }
-
     // Вывод контактов
     function showContacts() {
-        $('.table-contacts .table tbody').find($('tr')).remove();
+        $('.table-contacts .table tbody').empty();
         $.each(contacts, function (index, contact) {
 
-            var blockKnopok = $("<div>");
-            var buttonEdit = $("<button class='btn btn-success success'>").text('Edit');
-            var buttonDelit = $("<button class='btn btn-danger danger' style='margin-left:5px'>").text('Delete');
+            var blockKnopok = $("<div>").addClass('btn-block');
+            var buttonEdit = $("<button class='btn btn-success success button-success'>").text('Edit');
+            var buttonDelit = $("<button class='btn btn-danger danger button-remove'>").text('Delete');
             blockKnopok.append(buttonEdit);
             blockKnopok.append(buttonDelit);
 
@@ -41,7 +40,6 @@ $(document).ready(function () {
             var tdFirstName = $("<td>").text(contact.firstName);
             var tdLastName = $("<td>").text(contact.lastName);
             var tdOperator = $("<td>").text(contact.operator);
-            // var tdPhoneNumber = $("<td>").addClass("tdPhon").text(contact.phoneNumber);
             var tdPhoneNumber = $("<td>").text(contact.phoneNumber);
             var tdAction = $("<td>").html(blockKnopok);
 
@@ -105,7 +103,7 @@ $(document).ready(function () {
         contacts.splice(indexDelit, 1);
         showContacts();
     }
-    $('body').on('click', '.table-contacts .danger', function (e) {
+    $('body').on('click', '.table-contacts .button-remove', function (e) {
         var target = $(e.currentTarget);
         var phoneNumber = target.closest('tr').data("id");
         console.log(phoneNumber);
@@ -120,12 +118,12 @@ $(document).ready(function () {
     var newPhoneNumber = 5;
 
     function redactContact(oldPhoneNumber, newFirstName, newLastName, newOperator, newPhoneNumber) {
-        $.each(contacts, function (index, mas) {
-            if (mas.phoneNumber == oldPhoneNumber) {
-                contacts[index]['firstName'] = newFirstName;
-                contacts[index]['lastName'] = newLastName;
-                contacts[index]['operator'] = newOperator;
-                contacts[index]['phoneNumber'] = newPhoneNumber;
+        $.each(contacts, function (index, contact) {
+            if (contact.phoneNumber == oldPhoneNumber) {
+                contact.firstName = newFirstName;
+                contact.lastName = newLastName;
+                contact.operator = newOperator;
+                contact.phoneNumber = newPhoneNumber;
             };
         })
         showContacts();
