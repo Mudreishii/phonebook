@@ -12,8 +12,6 @@ $(document).ready(function () {
         phoneNumber: "911"
     }];
 
-    var pokazForm = 0; // Счётчик открытия и закрытия формы
-
     // Добовление контакта
     function add(newContact) {
         contacts.push(newContact);
@@ -40,6 +38,7 @@ $(document).ready(function () {
             var tdFirstName = $("<td>").text(contact.firstName);
             var tdLastName = $("<td>").text(contact.lastName);
             var tdOperator = $("<td>").text(contact.operator);
+            // var tdPhoneNumber = $("<td>").addClass("tdPhon").text(contact.phoneNumber);
             var tdPhoneNumber = $("<td>").text(contact.phoneNumber);
             var tdAction = $("<td>").html(blockKnopok);
 
@@ -57,38 +56,29 @@ $(document).ready(function () {
 
     // Открытие и закрытие формы добовления контакта
     // Открытие
-    $('.add-contact').click(function () {
-        if (pokazForm == 0) {
-            var formAddContact = $('#edd-block-form-horizontal').clone();
+    $('.add-contact').click(function () {           
             var blockFormAddContact = $('<div>').addClass("blockFormAddContact");
-
+            var addForm = $('#edd-block-form-horizontal').fadeIn();
+            blockFormAddContact.append(addForm);
             $('body').append(blockFormAddContact);
-            blockFormAddContact.append(formAddContact);
             blockFormAddContact.animate({
                 'marginTop': 150
-            })
-            formAddContact.fadeIn();
-            pokazForm = 1;
-        };
+            }) 
     })
     // Открытие и закрытие формы редактирования контакта
     // Открытие
     $('body').on('click', '.table-contacts .table .success', function () {
-        var formRedact = $('#block-form-horizontal-redact').clone();
-        var blockFormRedact = $('<div>').addClass("blockFormRedact");
-
-        $('body').append(blockFormRedact);
-        blockFormRedact.append(formRedact);
-        blockFormRedact.animate({
-            'marginTop': 150
-        })
-        formRedact.fadeIn();
-        pokazForm = 1;
+            var blockFormRedact = $('<div>').addClass("blockFormRedact");
+            var formRedact = $('#block-form-horizontal-redact').fadeIn();
+            blockFormRedact.append(formRedact);
+            $('body').append(blockFormRedact);
+            blockFormRedact.animate({
+                'marginTop': 150
+            })
     })
     // Закрытие
     $('body').on('click', '.button-krest', function () {
-        $(".blockFormAddContact, .blockFormRedact").remove();
-        pokazForm = 0;
+        $(".blockFormAddContact, .blockFormRedact").fadeOut(100);
     })
 
 
@@ -111,26 +101,25 @@ $(document).ready(function () {
     })
 
     // Редактирование контакта
-    var oldPhoneNumber = 911;
-    var newFirstName = 8;
-    var newLastName = 7;
-    var newOperator = 6;
-    var newPhoneNumber = 5;
-
-    function redactContact(oldPhoneNumber, newFirstName, newLastName, newOperator, newPhoneNumber) {
-        $.each(contacts, function (index, contact) {
-            if (contact.phoneNumber == oldPhoneNumber) {
-                contact.firstName = newFirstName;
-                contact.lastName = newLastName;
-                contact.operator = newOperator;
-                contact.phoneNumber = newPhoneNumber;
+    function redactContact(contact) {
+        $.each(contacts, function (index, contacts) {  
+            if (contacts.phoneNumber == contact.oldPhoneNumber) {
+                contacts.firstName = contact.newFirstName;
+                contacts.lastName = contact.newLastName;
+                contacts.operator = contact.newOperator;
+                contacts.phoneNumber = contact.newPhoneNumber;
             };
         })
         showContacts();
     }
-    $('body').click(function (argument) {
-        redactContact(oldPhoneNumber, newFirstName, newLastName, newOperator, newPhoneNumber);
-    })
+    $('body').click(redactContact({
+            oldPhoneNumber: "911",
+            newFirstName: "8",
+            newLastName: "156845",
+            newOperator: "6",
+            newPhoneNumber: "5"
+        })
+    );
 
 
 
