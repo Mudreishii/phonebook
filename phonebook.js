@@ -38,7 +38,6 @@ $(document).ready(function () {
             var tdFirstName = $("<td>").text(contact.firstName);
             var tdLastName = $("<td>").text(contact.lastName);
             var tdOperator = $("<td>").text(contact.operator);
-            // var tdPhoneNumber = $("<td>").addClass("tdPhon").text(contact.phoneNumber);
             var tdPhoneNumber = $("<td>").text(contact.phoneNumber);
             var tdAction = $("<td>").html(blockKnopok);
 
