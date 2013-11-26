@@ -56,28 +56,24 @@ $(document).ready(function () {
     // Открытие и закрытие формы добовления контакта
     // Открытие
     $('.add-contact').click(function () {           
-            var blockFormAddContact = $('<div>').addClass("blockFormAddContact");
-            var addForm = $('#edd-block-form-horizontal').fadeIn();
-            blockFormAddContact.append(addForm);
-            $('body').append(blockFormAddContact);
-            blockFormAddContact.animate({
+            $('.blockFormAddContact').fadeIn();
+            $('.blockFormAddContact').animate({
                 'marginTop': 150
             }) 
     })
     // Открытие и закрытие формы редактирования контакта
     // Открытие
     $('body').on('click', '.table-contacts .table .success', function () {
-            var blockFormRedact = $('<div>').addClass("blockFormRedact");
-            var formRedact = $('#block-form-horizontal-redact').fadeIn();
-            blockFormRedact.append(formRedact);
-            $('body').append(blockFormRedact);
-            blockFormRedact.animate({
+            $('.blockFormRedact').fadeIn();
+            $('.blockFormRedact').animate({
                 'marginTop': 150
             })
     })
     // Закрытие
     $('body').on('click', '.button-krest', function () {
-        $(".blockFormAddContact, .blockFormRedact").fadeOut(100);
+        $(".blockFormAddContact, .blockFormRedact").animate({
+            'marginTop': 0
+        }).fadeOut(100);
     })
 
 
@@ -111,13 +107,14 @@ $(document).ready(function () {
         })
         showContacts();
     }
-    $('body').click(redactContact({
+    $('body').on('click','.blockFormRedact .btn-edit', redactContact({
             oldPhoneNumber: "911",
-            newFirstName: "8",
+            newFirstName: "45",
             newLastName: "156845",
             newOperator: "6",
             newPhoneNumber: "5"
-        })
+        }) 
+    // Не коректно работает, срабатывает сразу после загрузки документа - какого????
     );
 
 

@@ -12,10 +12,6 @@ html,body {
     font-size: smaller;
 }
 
-.block-form-horizontal {
-    display: none;
-}
-
 .block-form-horizontal .shapka {
     height: 32px;
     line-height: 32px;
@@ -52,12 +48,7 @@ html,body {
 }
 
 /*=======================================*/
-.dvigNew {
-    width: 100px;
-    height: 100px;
-    background-color: silver;
-}
-/*=======================================*/
+
 
 #edd-block-form-horizontal, #block-form-horizontal-redact{
     width: 300px;
@@ -65,8 +56,12 @@ html,body {
     border-radius: 5px;
 }
 
-.blockFormAddContact {
+.blockFormAddContact, .blockFormRedact {
     position: absolute;
     top: 0px;
     left: 40%;
+    display: none;
+}
+.btn-block .danger {
+    margin-left: 5px;
 }
