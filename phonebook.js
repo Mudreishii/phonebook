@@ -58,7 +58,7 @@ $(document).ready(function () {
     $('.add-contact').click(function () {           
             $('.blockFormAddContact').fadeIn();
             $('.blockFormAddContact').animate({
-                'marginTop': 150
+                'top': 150
             }) 
     })
     // Открытие и закрытие формы редактирования контакта
@@ -66,13 +66,13 @@ $(document).ready(function () {
     $('body').on('click', '.table-contacts .table .success', function () {
             $('.blockFormRedact').fadeIn();
             $('.blockFormRedact').animate({
-                'marginTop': 150
+                'top': 150
             })
     })
     // Закрытие
-    $('body').on('click', '.button-krest', function () {
+    $('body').on('click', '.button-krest, .btn-closest, .btn-edit', function () {
         $(".blockFormAddContact, .blockFormRedact").animate({
-            'marginTop': 0
+            'top': 0
         }).fadeOut(100);
     })
 
@@ -107,15 +107,15 @@ $(document).ready(function () {
         })
         showContacts();
     }
-    $('body').on('click','.blockFormRedact .btn-edit', redactContact({
+    $('body').on('click','.blockFormRedact .btn-edit', function () {
+        redactContact({
             oldPhoneNumber: "911",
             newFirstName: "45",
             newLastName: "156845",
             newOperator: "6",
             newPhoneNumber: "5"
         }) 
-    // Не коректно работает, срабатывает сразу после загрузки документа - какого????
-    );
+    });
 
 
 
