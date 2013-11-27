@@ -29,7 +29,7 @@ $(document).ready(function () {
             tr.append(tdPhoneNumber);
             tr.append(tdAction);
 
-            $('.table-contacts tbody').append(tr);
+            $('.table-contacts .table tbody').append(tr);
         })
     }
 
@@ -46,13 +46,13 @@ $(document).ready(function () {
     }
 
     // Редактирование контакта - function
-    function redactContact(contact) {
-        $.each(contacts, function (index, contacts) {  
-            if (contacts.phoneNumber == contact.oldPhoneNumber) {
-                contacts.firstName = contact.newFirstName;
-                contacts.lastName = contact.newLastName;
-                contacts.operator = contact.newOperator;
-                contacts.phoneNumber = contact.newPhoneNumber;
+    function redactContact(oldPhone, newContact) {
+        $.each(contacts, function (index, contact) {  
+            if (contact.phoneNumber == oldPhone) {
+                contact.firstName = newContact.firstName;
+                contact.lastName = newContact.lastName;
+                contact.operator = newContact.operator;
+                contact.phoneNumber = newContact.phoneNumber;
             };
         })
         showContacts();
@@ -116,12 +116,12 @@ $(document).ready(function () {
 
     // Редактирование контакта
     $('body').on('click','.blockFormRedact .btn-edit', function () {
-        redactContact({
-            oldPhoneNumber: "911",
-            newFirstName: "45",
-            newLastName: "156845",
-            newOperator: "6",
-            newPhoneNumber: "5"
+        var oldPhoneNumber = "911";
+        redactContact(oldPhoneNumber, {
+            firstName: "45",
+            lastName: "156845",
+            operator: "6",
+            phoneNumber: "5"
         }) 
     });
 
