@@ -3,13 +3,13 @@ $(document).ready(function () {
     // Добовление контакта - function
     function add(newContact) {
         contacts.push(newContact);
+        showContacts();
     }
 
     // Вывод контактов - function
     function showContacts() {
         $('.table-contacts .table tbody').empty();
         $.each(contacts, function (index, contact) {
-
             var blockKnopok = $("<div>").addClass('btn-block');
             var buttonEdit = $("<button class='btn btn-success success button-success'>").text('Edit');
             var buttonDelit = $("<button class='btn btn-danger danger button-remove'>").text('Delete');
@@ -74,22 +74,33 @@ $(document).ready(function () {
     // Вывод контактов
     showContacts();
 
-    // Добовление контакта
-    add({
-        firstName: "John",
-        lastName: "Resiz",
-        operator: "066",
-        phoneNumber: "098239146"
-    });
-
-    // Открытие и закрытие формы добовления контакта
-    // Открытие
+    // Открытие формы добовления контакта
     $('.add-contact').click(function () {           
             $('.blockFormAddContact').fadeIn();
             $('.blockFormAddContact').animate({
                 'top': 150
             }) 
     })
+
+    // Создание пользователя
+    $('body').on('click','.btn-closest', function () {
+        var addNewYuserName = $('.blockFormAddContact input[name=first-name]').val();
+        var addLastName = $('.blockFormAddContact input[name=last-name]').val();
+        var addOperator = $('.blockFormAddContact option[value]').val();   
+        var addPhoneNumber = $('.blockFormAddContact input[name=phone-number]').val();
+
+        if (addNewYuserName && addLastName && addOperator && addPhoneNumber) {
+            add({
+                firstName: addNewYuserName,
+                lastName: addLastName,
+                operator: addOperator,
+                phoneNumber: addPhoneNumber
+                })
+        } else {
+                alert('не все поля заполненны');
+        }  
+    })
+
     // Открытие и закрытие формы редактирования контакта
     // Открытие
     $('body').on('click', '.table-contacts .table .success', function () {
