@@ -3,6 +3,7 @@ $(document).ready(function () {
     // Добовление контакта - function
     function add(newContact) {
         contacts.push(newContact);
+        alert('asd');
         showContacts();
     }
 
@@ -11,8 +12,8 @@ $(document).ready(function () {
         $('.table-contacts .table tbody').empty();
         $.each(contacts, function (index, contact) {
             var blockKnopok = $("<div>").addClass('btn-block');
-            var buttonEdit = $("<button class='btn btn-success success button-success'>").text('Edit');
-            var buttonDelit = $("<button class='btn btn-danger danger button-remove'>").text('Delete');
+            var buttonEdit = $("<button>").addClass('btn btn-success success button-success').text('Edit');
+            var buttonDelit = $("<button>").addClass('btn btn-danger danger button-remove').text('Delete');
             blockKnopok.append(buttonEdit);
             blockKnopok.append(buttonDelit);
 
@@ -83,18 +84,19 @@ $(document).ready(function () {
     })
 
     // Создание пользователя
-    $('body').on('click','.btn-closest', function () {
-        var addNewYuserName = $('.blockFormAddContact input[name=first-name]').val();
-        var addLastName = $('.blockFormAddContact input[name=last-name]').val();
-        var addOperator = $('.blockFormAddContact option[value]').val();   
-        var addPhoneNumber = $('.blockFormAddContact input[name=phone-number]').val();
+    $('.blockFormAddContact .addNewContact').submit( function () {
 
-        if (addNewYuserName && addLastName && addOperator && addPhoneNumber) {
+        var firstName = $('.blockFormAddContact input[name=first-name]').val();
+        var lastName = $('.blockFormAddContact input[name=last-name]').val();
+        var operator = $('.blockFormAddContact select').val();   
+        var phoneNumber = $('.blockFormAddContact input[name=phone-number]').val();
+
+        if (firstName && lastName && operator && phoneNumber) {
             add({
-                firstName: addNewYuserName,
-                lastName: addLastName,
-                operator: addOperator,
-                phoneNumber: addPhoneNumber
+                firstName: firstName,
+                lastName: lastName,
+                operator: operator,
+                phoneNumber: phoneNumber
                 })
         } else {
                 alert('не все поля заполненны');
@@ -110,7 +112,7 @@ $(document).ready(function () {
             })
     })
     // Закрытие
-    $('body').on('click', '.button-krest, .btn-closest, .btn-edit', function () {
+    $('body').on('click', '.button-krest, .btn-closest', function () {
         $(".blockFormAddContact, .blockFormRedact").animate({
             'top': 0
         }).fadeOut(100);
@@ -126,15 +128,15 @@ $(document).ready(function () {
     })
 
     // Редактирование контакта
-    $('body').on('click','.blockFormRedact .btn-edit', function () {
-        var oldPhoneNumber = "911";
-        redactContact(oldPhoneNumber, {
-            firstName: "45",
-            lastName: "156845",
-            operator: "6",
-            phoneNumber: "5"
-        }) 
-    });
+    // $('body').on('click','.blockFormRedact', function () {
+    //     var oldPhoneNumber = "911";
+    //     redactContact(oldPhoneNumber, {
+    //         firstName: "45",
+    //         lastName: "156845",
+    //         operator: "6",
+    //         phoneNumber: "5"
+    //     }) 
+    // });
 
 
 
