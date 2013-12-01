@@ -45,7 +45,7 @@
 
     <h4>Add New contact</h4>
     <div class="bady-block-form">
-      <form class="form-horizontal addNewContact" action="" onSubmit="false">
+      <form class="form-horizontal addNewContact" action="">
         <div class="control-group">
           <label class="control-label">First Name</label>
           <div class="controls">
@@ -75,6 +75,10 @@
             <input type="text" name="phone-number" class="input-block-level phone-number" placeholder="Phone Number">
           </div>
         </div>
+        <div class="red-alert">
+          <span>Контакт с таким номером уже существует, редактировать!?</span>
+          <button class="btn btn-warning">ok</button>
+        </div>
         <input type="submit" class="btn btn-large btn-block btn-closest" value="Sign in">
       </form>
        
@@ -103,7 +107,7 @@
         <div class="control-group">
           <label class="control-label" >Last Name</label>
           <div class="controls">
-            <input type="text" class="input-block-level last-name" id="help-inline-last-name">
+            <input type="text" name="last-name" class="input-block-level last-name" id="help-inline-last-name">
           </div>
         </div>
         <div class="control-group">
@@ -120,7 +124,7 @@
         <div class="control-group">
           <label class="control-label" >Phone</label>
           <div class="controls">
-            <input type="text" class="input-block-level phone-number" id="help-inline-phone">
+            <input type="text" name="phone-number" class="input-block-level phone-number" id="help-inline-phone">
           </div>
         </div>
         <div class="control-group">

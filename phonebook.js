@@ -3,7 +3,6 @@ $(document).ready(function () {
     // Добовление контакта - function
     function add(newContact) {
         contacts.push(newContact);
-        alert('asd');
         showContacts();
     }
 
@@ -12,8 +11,8 @@ $(document).ready(function () {
         $('.table-contacts .table tbody').empty();
         $.each(contacts, function (index, contact) {
             var blockKnopok = $("<div>").addClass('btn-block');
-            var buttonEdit = $("<button>").addClass('btn btn-success success button-success').text('Edit');
-            var buttonDelit = $("<button>").addClass('btn btn-danger danger button-remove').text('Delete');
+            var buttonEdit = $("<button>").addClass('btn btn-success button-success').text('Edit');
+            var buttonDelit = $("<button>").addClass('btn btn-danger button-remove').text('Delete');
             blockKnopok.append(buttonEdit);
             blockKnopok.append(buttonDelit);
 
@@ -37,8 +36,8 @@ $(document).ready(function () {
     // Удоление контакта - function
     function remove(telephone) {
         var indexDelit;
-        $.each(contacts, function (index, mas) {
-            if (mas.phoneNumber == telephone) {
+        $.each(contacts, function (index, contact) {
+            if (contact.phoneNumber == telephone) {
                 indexDelit = index;
             };
         })
@@ -73,49 +72,107 @@ $(document).ready(function () {
     }];
 
     // Вывод контактов
-    showContacts();
+    showContacts(); 
 
     // Открытие формы добовления контакта
-    $('.add-contact').click(function () {           
-            $('.blockFormAddContact').fadeIn();
-            $('.blockFormAddContact').animate({
-                'top': 150
-            }) 
+    $('.add-contact').click(function () {
+        $('.blockFormAddContact .addNewContact input[name=first-name], input[name=last-name], input[name=phone-number]').val('');
+        $('.blockFormAddContact').fadeIn();
+        $('.blockFormAddContact').animate({
+            'top': 150
+        },'fast') 
     })
 
     // Создание пользователя
-    $('.blockFormAddContact .addNewContact').submit( function () {
+    $('.blockFormAddContact .addNewContact').submit( function (event) {
+        event.preventDefault();
 
         var firstName = $('.blockFormAddContact input[name=first-name]').val();
         var lastName = $('.blockFormAddContact input[name=last-name]').val();
-        var operator = $('.blockFormAddContact select').val();   
+        var operator = $('.blockFormAddContact .operator').val();   
         var phoneNumber = $('.blockFormAddContact input[name=phone-number]').val();
 
-        if (firstName && lastName && operator && phoneNumber) {
+        var contactFinde = false;
+        $.each(contacts,function (index, contact) {
+            if (contact.phoneNumber==phoneNumber) {
+                $('.red-alert').fadeIn();
+                contactFinde = true;
+                
+                $('.red-alert button').click(function () {
+                    $('.red-alert').remove();
+                    $(".blockFormAddContact").animate({
+                        'top': 0
+                    },'fast').fadeOut(); 
+                    $('.blockFormRedact').fadeIn();
+                    $('.blockFormRedact').animate({
+                        'top': 150
+                    },'fast')
+
+                    $('.blockFormRedact input[name=first-name]').val(firstName);
+                    $('.blockFormRedact input[name=last-name]').val(lastName);
+                    $('.blockFormRedact .operator').val(operator);   
+                    $('.blockFormRedact input[name=phone-number]').val(phoneNumber);
+
+                    $('.blockFormRedact').submit(function (event) {
+                        event.preventDefault();
+
+                        var firstName = $('.blockFormRedact input[name=first-name]').val();
+                        var lastName = $('.blockFormRedact input[name=last-name]').val();
+                        var phoneNumber = $('.blockFormRedact input[name=phone-number]').val();
+                        var operator = $('.blockFormRedact .operator').val();   
+
+                        redactContact(phoneNumber, {
+                            firstName: firstName,
+                            lastName: lastName,
+                            operator: operator,
+                            phoneNumber: phoneNumber
+                        })
+                        $('.blockFormRedact').animate({
+                            'top': 0
+                        },'fast').fadeOut();
+                    })
+                })
+                return false;   
+            }
+        })
+
+        if (!contactFinde) {
+            if (!firstName) {
+                alert('Введите имя');
+            };
+            if (!lastName) {
+                alert('Введите фамилию');
+            };
+            if (!phoneNumber) {
+                alert('Введите телефон');
+            };
+            if (firstName && lastName && operator && phoneNumber) {
             add({
                 firstName: firstName,
                 lastName: lastName,
                 operator: operator,
                 phoneNumber: phoneNumber
                 })
-        } else {
-                alert('не все поля заполненны');
-        }  
+                $(".blockFormAddContact").animate({
+                    'top': 0
+                },'fast').fadeOut(); 
+            }
+        };
     })
 
     // Открытие и закрытие формы редактирования контакта
     // Открытие
-    $('body').on('click', '.table-contacts .table .success', function () {
+    $('body').on('click', '.table-contacts .table .btn-success', function () {
             $('.blockFormRedact').fadeIn();
             $('.blockFormRedact').animate({
                 'top': 150
             })
     })
     // Закрытие
-    $('body').on('click', '.button-krest, .btn-closest', function () {
+    $('body').on('click', '.button-krest', function () {
         $(".blockFormAddContact, .blockFormRedact").animate({
             'top': 0
-        }).fadeOut(100);
+        },'fast').fadeOut();
     })
 
 
