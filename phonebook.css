@@ -65,8 +65,8 @@ html,body {
 .btn-block .btn-danger {
     margin-left: 5px;
 }
-.red-alert {
+.error-creating-box {
     display: none;
     height: 60px;
-    font-size: 13px;
+    font-size: smaller;
 }

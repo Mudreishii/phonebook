@@ -11,7 +11,7 @@ $(document).ready(function () {
         $('.table-contacts .table tbody').empty();
         $.each(contacts, function (index, contact) {
             var blockKnopok = $("<div>").addClass('btn-block');
-            var buttonEdit = $("<button>").addClass('btn btn-success button-success').text('Edit');
+            var buttonEdit = $("<button>").addClass('btn btn-success button-success btn-edit-contact').text('Edit');
             var buttonDelit = $("<button>").addClass('btn btn-danger button-remove').text('Delete');
             blockKnopok.append(buttonEdit);
             blockKnopok.append(buttonDelit);
@@ -20,7 +20,7 @@ $(document).ready(function () {
             var tdFirstName = $("<td>").text(contact.firstName);
             var tdLastName = $("<td>").text(contact.lastName);
             var tdOperator = $("<td>").text(contact.operator);
-            var tdPhoneNumber = $("<td>").text(contact.phoneNumber);
+            var tdPhoneNumber = $("<td>").addClass('td-phone-number').text(contact.phoneNumber);
             var tdAction = $("<td>").append(blockKnopok);
 
             tr.append(tdFirstName);
@@ -95,11 +95,11 @@ $(document).ready(function () {
         var contactFinde = false;
         $.each(contacts,function (index, contact) {
             if (contact.phoneNumber==phoneNumber) {
-                $('.red-alert').fadeIn();
+                $('.error-creating-box').fadeIn();
                 contactFinde = true;
                 
-                $('.red-alert button').click(function () {
-                    $('.red-alert').remove();
+                $('.error-creating-box button').click(function () {
+                    $('.error-creating-box').remove();
                     $(".blockFormAddContact").animate({
                         'top': 0
                     },'fast').fadeOut(); 
@@ -139,12 +139,15 @@ $(document).ready(function () {
         if (!contactFinde) {
             if (!firstName) {
                 alert('Введите имя');
+                return;
             };
             if (!lastName) {
                 alert('Введите фамилию');
+                return;
             };
             if (!phoneNumber) {
                 alert('Введите телефон');
+                return;
             };
             if (firstName && lastName && operator && phoneNumber) {
             add({
@@ -162,11 +165,37 @@ $(document).ready(function () {
 
     // Открытие и закрытие формы редактирования контакта
     // Открытие
-    $('body').on('click', '.table-contacts .table .btn-success', function () {
-            $('.blockFormRedact').fadeIn();
-            $('.blockFormRedact').animate({
-                'top': 150
+    $('body').on('click', '.table-contacts .table .btn-edit-contact', function (e) {
+        $('.blockFormRedact').fadeIn();
+        $('.blockFormRedact').animate({
+            'top': 150
+        })
+        var $oldPhoneNumber = $(e.currentTarget).closest('tr').find('.td-phone-number').text();
+        $.each(contacts, function (index, contact) {
+            if (contact.phoneNumber==$oldPhoneNumber) {
+                $('.blockFormRedact input[name=first-name]').val(contact.firstName);
+                $('.blockFormRedact input[name=last-name]').val(contact.lastName);
+                $('.blockFormRedact .operator').val(contact.operator); 
+                $('.blockFormRedact input[name=phone-number]').val(contact.phoneNumber);
+            };
+        })
+        $('.blockFormRedact').submit(function (event) {
+            event.preventDefault();
+
+            var firstName = $('.blockFormRedact input[name=first-name]').val();
+            var lastName = $('.blockFormRedact input[name=last-name]').val();
+            var operator = $('.blockFormRedact .operator').val(); 
+            var phoneNumber = $('.blockFormRedact input[name=phone-number]').val();
+            redactContact(phoneNumber, {
+                firstName: firstName,
+                lastName: lastName,
+                operator: operator,
+                phoneNumber: phoneNumber
             })
+            $('.blockFormRedact').animate({
+                    'top': 0
+            },'fast').fadeOut();
+        })
     })
     // Закрытие
     $('body').on('click', '.button-krest', function () {
