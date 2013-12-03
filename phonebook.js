@@ -20,7 +20,7 @@ $(document).ready(function () {
             var tdFirstName = $("<td>").text(contact.firstName);
             var tdLastName = $("<td>").text(contact.lastName);
             var tdOperator = $("<td>").text(contact.operator);
-            var tdPhoneNumber = $("<td>").addClass('td-phone-number').text(contact.phoneNumber);
+            var tdPhoneNumber = $("<td>").addClass('phone-number').text(contact.phoneNumber);
             var tdAction = $("<td>").append(blockKnopok);
 
             tr.append(tdFirstName);
@@ -62,7 +62,7 @@ $(document).ready(function () {
     var contacts = [{
         firstName: "Дима",
         lastName: "Белов",
-        operator: "063",
+        operator: "093",
         phoneNumber: "0631346611"
     }, {
         firstName: "Александр",
@@ -89,17 +89,17 @@ $(document).ready(function () {
 
         var firstName = $('.blockFormAddContact input[name=first-name]').val();
         var lastName = $('.blockFormAddContact input[name=last-name]').val();
-        var operator = $('.blockFormAddContact .operator').val();   
+        var operator = $('.blockFormAddContact select[name=operator]').val();   
         var phoneNumber = $('.blockFormAddContact input[name=phone-number]').val();
 
         var contactFinde = false;
         $.each(contacts,function (index, contact) {
             if (contact.phoneNumber==phoneNumber) {
-                $('.error-creating-box').fadeIn();
+                $('.save-error').fadeIn();
                 contactFinde = true;
                 
-                $('.error-creating-box button').click(function () {
-                    $('.error-creating-box').remove();
+                $('.save-error button').click(function () {
+                    $('.save-error').remove();
                     $(".blockFormAddContact").animate({
                         'top': 0
                     },'fast').fadeOut(); 
@@ -110,7 +110,7 @@ $(document).ready(function () {
 
                     $('.blockFormRedact input[name=first-name]').val(firstName);
                     $('.blockFormRedact input[name=last-name]').val(lastName);
-                    $('.blockFormRedact .operator').val(operator);   
+                    $('.blockFormRedact select[name=operator]').val(operator);   
                     $('.blockFormRedact input[name=phone-number]').val(phoneNumber);
 
                     $('.blockFormRedact').submit(function (event) {
@@ -119,7 +119,7 @@ $(document).ready(function () {
                         var firstName = $('.blockFormRedact input[name=first-name]').val();
                         var lastName = $('.blockFormRedact input[name=last-name]').val();
                         var phoneNumber = $('.blockFormRedact input[name=phone-number]').val();
-                        var operator = $('.blockFormRedact .operator').val();   
+                        var operator = $('.blockFormRedact select[name=operator]').val();   
 
                         redactContact(phoneNumber, {
                             firstName: firstName,
@@ -170,12 +170,12 @@ $(document).ready(function () {
         $('.blockFormRedact').animate({
             'top': 150
         })
-        var $oldPhoneNumber = $(e.currentTarget).closest('tr').find('.td-phone-number').text();
+        var oldPhoneNumber = $(e.currentTarget).closest('tr').find('.phone-number').text();
         $.each(contacts, function (index, contact) {
-            if (contact.phoneNumber==$oldPhoneNumber) {
+            if (contact.phoneNumber==oldPhoneNumber) {
                 $('.blockFormRedact input[name=first-name]').val(contact.firstName);
                 $('.blockFormRedact input[name=last-name]').val(contact.lastName);
-                $('.blockFormRedact .operator').val(contact.operator); 
+                $('.blockFormRedact select[name=operator]').val(contact.operator); 
                 $('.blockFormRedact input[name=phone-number]').val(contact.phoneNumber);
             };
         })
@@ -184,9 +184,10 @@ $(document).ready(function () {
 
             var firstName = $('.blockFormRedact input[name=first-name]').val();
             var lastName = $('.blockFormRedact input[name=last-name]').val();
-            var operator = $('.blockFormRedact .operator').val(); 
+            var operator = $('.blockFormRedact select[name=operator]').val(); 
             var phoneNumber = $('.blockFormRedact input[name=phone-number]').val();
-            redactContact(phoneNumber, {
+
+            redactContact(oldPhoneNumber, {
                 firstName: firstName,
                 lastName: lastName,
                 operator: operator,
@@ -194,7 +195,8 @@ $(document).ready(function () {
             })
             $('.blockFormRedact').animate({
                     'top': 0
-            },'fast').fadeOut();
+            },'fast');
+            $('.blockFormRedact').fadeOut();
         })
     })
     // Закрытие

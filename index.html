@@ -61,11 +61,11 @@
         <div class="control-group">
           <label class="control-label" >Operator</label>
           <div class="controls">
-            <select class="input-block-level operator">
-              <option value="050" name="operator">МТС</option>
-              <option value="093" name="operator">life:)</option>
-              <option value="067" name="operator">Киивстар</option>
-              <option value="068" name="operator">Билайн</option>
+            <select class="input-block-level operator" name="operator">
+              <option value="050">МТС</option>
+              <option value="093">life:)</option>
+              <option value="067">Киивстар</option>
+              <option value="068">Билайн</option>
             </select>
           </div>
         </div>
@@ -75,7 +75,7 @@
             <input type="text" name="phone-number" class="input-block-level phone-number" placeholder="Phone Number">
           </div>
         </div>
-        <div class="error-creating-box">
+        <div class="save-error">
           <span>Контакт с таким номером уже существует, редактировать!?</span>
           <button class="btn btn-warning">ok</button>
         </div>
@@ -113,7 +113,7 @@
         <div class="control-group">
           <label class="control-label" >Operator</label>
           <div class="controls">
-            <select class="input-block-level operator">
+            <select class="input-block-level operator" name="operator">
               <option value="050">МТС</option>
               <option value="093">life:)</option>
               <option value="067">Киивстар</option>
