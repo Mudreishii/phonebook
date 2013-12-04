@@ -1,32 +1,4 @@
 $(document).ready(function () {
-// debugger;
-    // Форма добовления контакта - открытие
-    function blockFormAddContactOpen () {
-        $('.blockFormAddContact').fadeIn();
-        $('.blockFormAddContact').animate({
-            'top': 150
-        },'fast') 
-    }
-    // Форма добовления контакта - закрытие
-    function blockFormAddContactClose () {
-        $(".blockFormAddContact").animate({
-            'top': 0
-        },'fast').fadeOut(); 
-    }
-    // Форма редактирования - открытие
-    function blockFormRedactOpen () {
-        $('.blockFormRedact').fadeIn();
-        $('.blockFormRedact').animate({
-            'top': 150
-        },'fast')
-    }
-    // Форма редактирования - закрытие
-    function blockFormRedactClose () {
-        $('.blockFormRedact').animate({
-            'top': 0
-        },'fast').fadeOut();
-    }
-
 
     // Добовление контакта - function
     function add(newContact) {
@@ -73,22 +45,7 @@ $(document).ready(function () {
         showContacts();
     }
 
-    // Отправка контакта для редактирования
-    function sendСontact (number) {
-        var firstName = $('.blockFormRedact input[name=first-name]').val();
-        var lastName = $('.blockFormRedact input[name=last-name]').val();
-        var operator = $('.blockFormRedact select[name=operator]').val(); 
-        var phoneNumber = $('.blockFormRedact input[name=phone-number]').val();
-
-        redactContact(number, {
-            firstName: firstName,
-            lastName: lastName,
-            operator: operator,
-            phoneNumber: phoneNumber
-        })
-    }
-
-    // Приём редактируемого контакта - function
+    // Редактирование контакта - function
     function redactContact(oldPhone, newContact) {
         $.each(contacts, function (index, contact) {  
             if (contact.phoneNumber == oldPhone) {
@@ -117,14 +74,17 @@ $(document).ready(function () {
     // Вывод контактов
     showContacts(); 
 
-    // Очистка и открытие формы добовления контакта
+    // Открытие формы добовления контакта
     $('.add-contact').click(function () {
         $('.blockFormAddContact .addNewContact input[name=first-name], input[name=last-name], input[name=phone-number]').val('');
-        blockFormAddContactOpen();
+        $('.blockFormAddContact').fadeIn();
+        $('.blockFormAddContact').animate({
+            'top': 150
+        },'fast') 
     })
 
     // Создание пользователя
-    $('.blockFormAddContact .addNewContact').submit( function (event) {
+    $('.blockFormAddContact contact-form').submit( function (event) {
         event.preventDefault();
 
         var firstName = $('.blockFormAddContact input[name=first-name]').val();
@@ -139,24 +99,41 @@ $(document).ready(function () {
                 return false;   
             }
         })
-        if (contactExists) {
-            console.log('такой есть')
-            $('.save-error').fadeIn(); /* ВОТ ЭТОТ ЭЛЕМЕНТ */
-            $('.save-error button').click(function () {
-                $('.save-error').fadeOut(); /* и ВОТ он должен пропасть */
-                blockFormAddContactClose();
-                blockFormRedactOpen();
+        // if (contactExists) {
+        //     $('.save-error').fadeIn();
+        //     $('.save-error button').click(function () {
+        //         $('.save-error').remove();
+        //         $(".blockFormAddContact").animate({
+        //             'top': 0
+        //         },'fast').fadeOut(); 
+        //         $('.blockFormRedact').fadeIn();
+        //         $('.blockFormRedact').animate({
+        //             'top': 150
+        //         },'fast')
 
-                $('.blockFormRedact input[name=first-name]').val(firstName);
-                $('.blockFormRedact input[name=last-name]').val(lastName);
-                $('.blockFormRedact select[name=operator]').val(operator);   
-                $('.blockFormRedact input[name=phone-number]').val(phoneNumber);
-                console.log(firstName)
-                $('.blockFormRedact').submit(function (event) {
-                    event.preventDefault();
-                    sendСontact(phoneNumber);
-                    blockFormRedactClose();
-                })
+        //         $('.blockFormRedact input[name=first-name]').val(firstName);
+        //         $('.blockFormRedact input[name=last-name]').val(lastName);
+        //         $('.blockFormRedact select[name=operator]').val(operator);   
+        //         $('.blockFormRedact input[name=phone-number]').val(phoneNumber);
+
+                // $('.blockFormRedact').submit(function (event) {
+                //     event.preventDefault();
+
+                //     var firstName = $('.blockFormRedact input[name=first-name]').val();
+                //     var lastName = $('.blockFormRedact input[name=last-name]').val();
+                //     var phoneNumber = $('.blockFormRedact input[name=phone-number]').val();
+                //     var operator = $('.blockFormRedact select[name=operator]').val();   
+
+                //     redactContact(phoneNumber, {
+                //         firstName: firstName,
+                //         lastName: lastName,
+                //         operator: operator,
+                //         phoneNumber: phoneNumber
+                //     })
+                //     $('.blockFormRedact').animate({
+                //         'top': 0
+                //     },'fast').fadeOut();
+                // })
             })
         };
         if (!contactExists) {
@@ -179,17 +156,21 @@ $(document).ready(function () {
                 operator: operator,
                 phoneNumber: phoneNumber
                 })
-                blockFormAddContactClose();
+                $(".blockFormAddContact").animate({
+                    'top': 0
+                },'fast').fadeOut(); 
             }
         };
-        contactExists = false;
     })
     
 
     // Открытие и закрытие формы редактирования контакта
     // Открытие
     $('body').on('click', '.table-contacts .table .btn-edit-contact', function (e) {
-        blockFormRedactOpen();
+        $('.blockFormRedact').fadeIn();
+        $('.blockFormRedact').animate({
+            'top': 150
+        })
         var oldPhoneNumber = $(e.currentTarget).closest('tr').find('.phone-number').text();
         $.each(contacts, function (index, contact) {
             if (contact.phoneNumber==oldPhoneNumber) {
@@ -199,13 +180,26 @@ $(document).ready(function () {
                 $('.blockFormRedact input[name=phone-number]').val(contact.phoneNumber);
             };
         })
-        $('.blockFormRedact').submit(function (event) {
+        $('.blockFormRedact contact-form').submit(function (event) {
             event.preventDefault();
-            sendСontact(oldPhoneNumber);
-            blockFormRedactClose();
+
+            // var firstName = $('.blockFormRedact input[name=first-name]').val();
+            // var lastName = $('.blockFormRedact input[name=last-name]').val();
+            // var operator = $('.blockFormRedact select[name=operator]').val(); 
+            // var phoneNumber = $('.blockFormRedact input[name=phone-number]').val();
+
+            // redactContact(oldPhoneNumber, {
+            //     firstName: firstName,
+            //     lastName: lastName,
+            //     operator: operator,
+            //     phoneNumber: phoneNumber
+            // })
+            // $('.blockFormRedact').animate({
+            //     'top': 0
+            // },'fast');
+            // $('.blockFormRedact').fadeOut();
         })
     })
-
     // Закрытие
     $('body').on('click', '.button-krest', function () {
         $(".blockFormAddContact, .blockFormRedact").animate({
