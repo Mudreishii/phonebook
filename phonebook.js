@@ -46,7 +46,7 @@ $(document).ready(function () {
     }
 
     // Редактирование контакта - function
-    function redactContact(oldPhone, newContact) {
+    function edit(oldPhone, newContact) {
         $.each(contacts, function (index, contact) {  
             if (contact.phoneNumber == oldPhone) {
                 contact.firstName = newContact.firstName;
@@ -84,13 +84,26 @@ $(document).ready(function () {
     })
 
     // Создание пользователя
-    $('.blockFormAddContact contact-form').submit( function (event) {
+    $('.blockFormAddContact .contact-form').submit( function (event) {
         event.preventDefault();
 
         var firstName = $('.blockFormAddContact input[name=first-name]').val();
         var lastName = $('.blockFormAddContact input[name=last-name]').val();
         var operator = $('.blockFormAddContact select[name=operator]').val();   
         var phoneNumber = $('.blockFormAddContact input[name=phone-number]').val();
+
+        if (!firstName) {
+            alert('Введите имя');
+            return;
+        };
+        if (!lastName) {
+            alert('Введите фамилию');
+            return;
+        };
+        if (!phoneNumber) {
+            alert('Введите телефон');
+            return;
+        };
 
         var contactExists = false;
         $.each(contacts,function (index, contact) {
@@ -99,6 +112,30 @@ $(document).ready(function () {
                 return false;   
             }
         })
+        if (!contactExists) {
+            add({
+                firstName: firstName,
+                lastName: lastName,
+                operator: operator,
+                phoneNumber: phoneNumber
+                }) 
+        } 
+        if (contactExists) {
+            edit(phoneNumber, {
+                firstName: firstName,
+                lastName: lastName,
+                operator: operator,
+                phoneNumber: phoneNumber
+            })
+        };
+        $(".blockFormAddContact").animate({
+            'top': 0
+        },'fast').fadeOut();
+        
+        
+
+
+
         // if (contactExists) {
         //     $('.save-error').fadeIn();
         //     $('.save-error button').click(function () {
@@ -134,33 +171,33 @@ $(document).ready(function () {
                 //         'top': 0
                 //     },'fast').fadeOut();
                 // })
-            })
-        };
-        if (!contactExists) {
-            if (!firstName) {
-                alert('Введите имя');
-                return;
-            };
-            if (!lastName) {
-                alert('Введите фамилию');
-                return;
-            };
-            if (!phoneNumber) {
-                alert('Введите телефон');
-                return;
-            };
-            if (firstName && lastName && operator && phoneNumber) {
-            add({
-                firstName: firstName,
-                lastName: lastName,
-                operator: operator,
-                phoneNumber: phoneNumber
-                })
-                $(".blockFormAddContact").animate({
-                    'top': 0
-                },'fast').fadeOut(); 
-            }
-        };
+            // })
+        // };
+        // if (!contactExists) {
+        //     if (!firstName) {
+        //         alert('Введите имя');
+        //         return;
+        //     };
+        //     if (!lastName) {
+        //         alert('Введите фамилию');
+        //         return;
+        //     };
+        //     if (!phoneNumber) {
+        //         alert('Введите телефон');
+        //         return;
+        //     };
+            // if (firstName && lastName && operator && phoneNumber) {
+            // add({
+            //     firstName: firstName,
+            //     lastName: lastName,
+            //     operator: operator,
+            //     phoneNumber: phoneNumber
+            //     })
+            //     $(".blockFormAddContact").animate({
+            //         'top': 0
+            //     },'fast').fadeOut(); 
+            // }
+        // };
     })
     
 
@@ -180,25 +217,14 @@ $(document).ready(function () {
                 $('.blockFormRedact input[name=phone-number]').val(contact.phoneNumber);
             };
         })
-        $('.blockFormRedact contact-form').submit(function (event) {
-            event.preventDefault();
+        
 
-            // var firstName = $('.blockFormRedact input[name=first-name]').val();
-            // var lastName = $('.blockFormRedact input[name=last-name]').val();
-            // var operator = $('.blockFormRedact select[name=operator]').val(); 
-            // var phoneNumber = $('.blockFormRedact input[name=phone-number]').val();
 
-            // redactContact(oldPhoneNumber, {
-            //     firstName: firstName,
-            //     lastName: lastName,
-            //     operator: operator,
-            //     phoneNumber: phoneNumber
-            // })
-            // $('.blockFormRedact').animate({
-            //     'top': 0
-            // },'fast');
-            // $('.blockFormRedact').fadeOut();
-        })
+
+
+
+
+
     })
     // Закрытие
     $('body').on('click', '.button-krest', function () {
