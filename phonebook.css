@@ -65,8 +65,4 @@ html,body {
 .btn-block .btn-danger {
     margin-left: 5px;
 }
-.save-error {
-    display: none;
-    height: 60px;
-    font-size: smaller;
-}
+

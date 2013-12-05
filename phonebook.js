@@ -10,26 +10,28 @@ $(document).ready(function () {
     function showContacts() {
         $('.table-contacts .table tbody').empty();
         $.each(contacts, function (index, contact) {
-            var blockKnopok = $("<div>").addClass('btn-block');
-            var buttonEdit = $("<button>").addClass('btn btn-success button-success btn-edit-contact').text('Edit');
-            var buttonDelit = $("<button>").addClass('btn btn-danger button-remove').text('Delete');
-            blockKnopok.append(buttonEdit);
-            blockKnopok.append(buttonDelit);
+            if (contact.visible) {
+                var blockKnopok = $("<div>").addClass('btn-block');
+                var buttonEdit = $("<button>").addClass('btn btn-success button-success btn-edit-contact').text('Edit');
+                var buttonDelit = $("<button>").addClass('btn btn-danger button-remove').text('Delete');
+                blockKnopok.append(buttonEdit);
+                blockKnopok.append(buttonDelit);
 
-            var tr = $("<tr>").data("id",contact.phoneNumber);
-            var tdFirstName = $("<td>").text(contact.firstName);
-            var tdLastName = $("<td>").text(contact.lastName);
-            var tdOperator = $("<td>").text(contact.operator);
-            var tdPhoneNumber = $("<td>").addClass('phone-number').text(contact.phoneNumber);
-            var tdAction = $("<td>").append(blockKnopok);
+                var tr = $("<tr>").data("id",contact.phoneNumber);
+                var tdFirstName = $("<td>").text(contact.firstName);
+                var tdLastName = $("<td>").text(contact.lastName);
+                var tdOperator = $("<td>").text(contact.operator);
+                var tdPhoneNumber = $("<td>").addClass('phone-number').text(contact.phoneNumber);
+                var tdAction = $("<td>").append(blockKnopok);
 
-            tr.append(tdFirstName);
-            tr.append(tdLastName);
-            tr.append(tdOperator);
-            tr.append(tdPhoneNumber);
-            tr.append(tdAction);
+                tr.append(tdFirstName);
+                tr.append(tdLastName);
+                tr.append(tdOperator);
+                tr.append(tdPhoneNumber);
+                tr.append(tdAction);
 
-            $('.table-contacts .table tbody').append(tr);
+                $('.table-contacts .table tbody').append(tr);
+            };
         })
     }
 
@@ -63,12 +65,14 @@ $(document).ready(function () {
         firstName: "Дима",
         lastName: "Белов",
         operator: "093",
-        phoneNumber: "0631346611"
+        phoneNumber: "0631346611",
+        visible: true
     }, {
         firstName: "Александр",
         lastName: "Соловей",
         operator: "067",
-        phoneNumber: "911"
+        phoneNumber: "911",
+        visible: true
     }];
 
     // Вывод контактов
@@ -117,87 +121,21 @@ $(document).ready(function () {
                 firstName: firstName,
                 lastName: lastName,
                 operator: operator,
-                phoneNumber: phoneNumber
+                phoneNumber: phoneNumber,
+                visible: true
                 }) 
-        } 
-        if (contactExists) {
+        } else {
             edit(phoneNumber, {
                 firstName: firstName,
                 lastName: lastName,
                 operator: operator,
-                phoneNumber: phoneNumber
+                phoneNumber: phoneNumber,
+                visible: true
             })
         };
         $(".blockFormAddContact").animate({
             'top': 0
         },'fast').fadeOut();
-        
-        
-
-
-
-        // if (contactExists) {
-        //     $('.save-error').fadeIn();
-        //     $('.save-error button').click(function () {
-        //         $('.save-error').remove();
-        //         $(".blockFormAddContact").animate({
-        //             'top': 0
-        //         },'fast').fadeOut(); 
-        //         $('.blockFormRedact').fadeIn();
-        //         $('.blockFormRedact').animate({
-        //             'top': 150
-        //         },'fast')
-
-        //         $('.blockFormRedact input[name=first-name]').val(firstName);
-        //         $('.blockFormRedact input[name=last-name]').val(lastName);
-        //         $('.blockFormRedact select[name=operator]').val(operator);   
-        //         $('.blockFormRedact input[name=phone-number]').val(phoneNumber);
-
-                // $('.blockFormRedact').submit(function (event) {
-                //     event.preventDefault();
-
-                //     var firstName = $('.blockFormRedact input[name=first-name]').val();
-                //     var lastName = $('.blockFormRedact input[name=last-name]').val();
-                //     var phoneNumber = $('.blockFormRedact input[name=phone-number]').val();
-                //     var operator = $('.blockFormRedact select[name=operator]').val();   
-
-                //     redactContact(phoneNumber, {
-                //         firstName: firstName,
-                //         lastName: lastName,
-                //         operator: operator,
-                //         phoneNumber: phoneNumber
-                //     })
-                //     $('.blockFormRedact').animate({
-                //         'top': 0
-                //     },'fast').fadeOut();
-                // })
-            // })
-        // };
-        // if (!contactExists) {
-        //     if (!firstName) {
-        //         alert('Введите имя');
-        //         return;
-        //     };
-        //     if (!lastName) {
-        //         alert('Введите фамилию');
-        //         return;
-        //     };
-        //     if (!phoneNumber) {
-        //         alert('Введите телефон');
-        //         return;
-        //     };
-            // if (firstName && lastName && operator && phoneNumber) {
-            // add({
-            //     firstName: firstName,
-            //     lastName: lastName,
-            //     operator: operator,
-            //     phoneNumber: phoneNumber
-            //     })
-            //     $(".blockFormAddContact").animate({
-            //         'top': 0
-            //     },'fast').fadeOut(); 
-            // }
-        // };
     })
     
 
@@ -219,12 +157,7 @@ $(document).ready(function () {
         })
         
 
-
-
-
-
-
-
+        
     })
     // Закрытие
     $('body').on('click', '.button-krest', function () {
