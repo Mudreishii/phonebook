@@ -123,7 +123,7 @@ $(document).ready(function () {
                 operator: operator,
                 phoneNumber: phoneNumber,
                 visible: true
-                }) 
+            }) 
         } else {
             edit(phoneNumber, {
                 firstName: firstName,
@@ -155,9 +155,6 @@ $(document).ready(function () {
                 $('.blockFormRedact input[name=phone-number]').val(contact.phoneNumber);
             };
         })
-        
-
-        
     })
     // Закрытие
     $('body').on('click', '.button-krest', function () {
@@ -175,7 +172,26 @@ $(document).ready(function () {
         remove(phoneNumber);
     })
 
-    
+    // Поиск
+    $('.search-query').keyup(function () {
+        var searchValue = $(this).val();
+
+        if (searchValue == '') {
+            $.each(contacts, function (index, contact) {
+                contact.visible = true;
+            })
+        } else {
+            $.each(contacts, function (index, contact) {
+                if (contact.firstName.indexOf(searchValue)>=0 || contact.lastName.indexOf(searchValue)>=0 || contact.operator.indexOf(searchValue)>=0 || contact.phoneNumber.indexOf(searchValue)>=0) {
+                    console.log(contact.firstName);
+                    contact.visible = true;
+                } else {
+                    contact.visible = false;
+                };
+            })
+        };
+        showContacts();
+    })
 
 
 
