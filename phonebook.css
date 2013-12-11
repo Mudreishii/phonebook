@@ -30,7 +30,7 @@ html,body {
     text-align: center;
 }
 
-.bady-block-form {
+.bady-block {
     padding: 0.5em 1.5em;
 }
 
@@ -56,7 +56,7 @@ html,body {
     border-radius: 5px;
 }
 
-.blockFormAddContact, .blockFormRedact, .blockFormStatistic {
+.blockFormAddContact, .blockFormRedact, .blockStatistic {
     position: absolute;
     top: 0px;
     left: 40%;

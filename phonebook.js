@@ -68,13 +68,13 @@ $(document).ready(function () {
     var contacts = [{
         firstName: "Дима",
         lastName: "Белов",
-        operator: "093",
+        operator: "93",
         phoneNumber: "0631346611",
         visible: true
     }, {
         firstName: "Александр",
         lastName: "Соловей",
-        operator: "067",
+        operator: "67",
         phoneNumber: "911",
         visible: true
     }];
@@ -162,7 +162,7 @@ $(document).ready(function () {
     });
     // Закрытие
     $('body').on('click', '.button-krest', function () {
-        $(".blockFormAddContact, .blockFormRedact, .blockFormStatistic").animate({
+        $(".blockFormAddContact, .blockFormRedact, .blockStatistic").animate({
             'top': 0
         },'fast').fadeOut();
     });
@@ -191,28 +191,21 @@ $(document).ready(function () {
 
     // Статистика
     $('.show-statistics').click(function () {
-        var mtcStat = 0,lifeStat = 0,kiivstarStat = 0,bilainStat = 0;
+        var stat = [];
+        stat[50] = 0;
+        stat[93] = 0;
+        stat[67] = 0;
+        stat[68] = 0;
         $.each(contacts, function (index, contact) {
-            if (contact.operator == '050') {
-                mtcStat++;
-            };
-            if (contact.operator == '093') {
-                lifeStat++;
-            };
-            if (contact.operator == '067') {
-                kiivstarStat++;
-            };
-            if (contact.operator == '068') {
-                bilainStat++;
-            };
+            stat[contact.operator]++;
         });
-        $('.blockFormStatistic .mtcStat').text(mtcStat);
-        $('.blockFormStatistic .lifeStat').text(lifeStat);
-        $('.blockFormStatistic .kiivstarStat').text(kiivstarStat);
-        $('.blockFormStatistic .bilainStat').text(bilainStat);
+        $('.blockStatistic .mtcStat').text(stat[50]);
+        $('.blockStatistic .lifeStat').text(stat[93]);
+        $('.blockStatistic .kiivstarStat').text(stat[67]);
+        $('.blockStatistic .bilainStat').text(stat[68]);
 
-        $('.blockFormStatistic') .fadeIn();
-        $('.blockFormStatistic').animate({
+        $('.blockStatistic') .fadeIn();
+        $('.blockStatistic').animate({
             'top': 150
         },'fast');
     });
