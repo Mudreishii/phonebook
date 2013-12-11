@@ -4,7 +4,7 @@ $(document).ready(function () {
     function add(newContact) {
         contacts.push(newContact);
         showContacts();
-    }
+    };
 
     // Вывод контактов - function
     function showContacts() {
@@ -32,8 +32,8 @@ $(document).ready(function () {
 
                 $('.table-contacts .table tbody').append(tr);
             };
-        })
-    }
+        });
+    };
 
     // Удоление контакта - function
     function remove(telephone) {
@@ -42,13 +42,17 @@ $(document).ready(function () {
             if (contact.phoneNumber == telephone) {
                 indexDelit = index;
             };
-        })
+        });
         contacts.splice(indexDelit, 1);
         showContacts();
-    }
+    };
+
+    // Телефон редактируемого контакта
+    var rememberPhone;
 
     // Редактирование контакта - function
     function edit(oldPhone, newContact) {
+        console.log(newContact.phoneNumber);
         $.each(contacts, function (index, contact) {  
             if (contact.phoneNumber == oldPhone) {
                 contact.firstName = newContact.firstName;
@@ -56,9 +60,9 @@ $(document).ready(function () {
                 contact.operator = newContact.operator;
                 contact.phoneNumber = newContact.phoneNumber;
             };
-        })
+        });
         showContacts();
-    }
+    };
 
 
     var contacts = [{
@@ -84,8 +88,8 @@ $(document).ready(function () {
         $('.blockFormAddContact').fadeIn();
         $('.blockFormAddContact').animate({
             'top': 150
-        },'fast') 
-    })
+        },'fast'); 
+    });
 
     // Создание пользователя
     $('.blockFormAddContact .contact-form').submit( function (event) {
@@ -95,7 +99,7 @@ $(document).ready(function () {
         var lastName = $('.blockFormAddContact input[name=last-name]').val();
         var operator = $('.blockFormAddContact select[name=operator]').val();   
         var phoneNumber = $('.blockFormAddContact input[name=phone-number]').val();
-
+        
         if (!firstName) {
             alert('Введите имя');
             return;
@@ -114,8 +118,8 @@ $(document).ready(function () {
             if (contact.phoneNumber==phoneNumber) {
                 contactExists = true;
                 return false;   
-            }
-        })
+            };
+        });
         if (!contactExists) {
             add({
                 firstName: firstName,
@@ -123,7 +127,7 @@ $(document).ready(function () {
                 operator: operator,
                 phoneNumber: phoneNumber,
                 visible: true
-            }) 
+            }); 
         } else {
             edit(phoneNumber, {
                 firstName: firstName,
@@ -131,13 +135,12 @@ $(document).ready(function () {
                 operator: operator,
                 phoneNumber: phoneNumber,
                 visible: true
-            })
+            });
         };
         $(".blockFormAddContact").animate({
             'top': 0
         },'fast').fadeOut();
-    })
-    
+    });
 
     // Открытие и закрытие формы редактирования контакта
     // Открытие
@@ -145,7 +148,7 @@ $(document).ready(function () {
         $('.blockFormRedact').fadeIn();
         $('.blockFormRedact').animate({
             'top': 150
-        })
+        });
         var oldPhoneNumber = $(e.currentTarget).closest('tr').find('.phone-number').text();
         $.each(contacts, function (index, contact) {
             if (contact.phoneNumber==oldPhoneNumber) {
@@ -154,15 +157,29 @@ $(document).ready(function () {
                 $('.blockFormRedact select[name=operator]').val(contact.operator); 
                 $('.blockFormRedact input[name=phone-number]').val(contact.phoneNumber);
             };
-        })
-    })
+        });
+        rememberPhone = oldPhoneNumber;
+    });
     // Закрытие
     $('body').on('click', '.button-krest', function () {
-        $(".blockFormAddContact, .blockFormRedact").animate({
+        $(".blockFormAddContact, .blockFormRedact, .blockFormStatistic").animate({
             'top': 0
         },'fast').fadeOut();
-    })
+    });
 
+    // Редактирование контакта
+    $('.blockFormRedact .contact-form').submit(function (event) {
+        event.preventDefault();
+        edit(rememberPhone, {
+            firstName: $('.blockFormRedact input[name=first-name]').val(),
+            lastName: $('.blockFormRedact input[name=last-name]').val(),
+            operator: $('.blockFormRedact select[name=operator]').val(),
+            phoneNumber: $('.blockFormRedact input[name=phone-number]').val()
+        });
+        $(".blockFormRedact").animate({
+            'top': 0
+        },'fast').fadeOut();
+    });
 
     // Удоление контакта
     $('body').on('click', '.table-contacts .button-remove', function (e) {
@@ -170,7 +187,35 @@ $(document).ready(function () {
         var phoneNumber = $target.closest('tr').data("id");
         console.log(phoneNumber);
         remove(phoneNumber);
-    })
+    });
+
+    // Статистика
+    $('.show-statistics').click(function () {
+        var mtcStat = 0,lifeStat = 0,kiivstarStat = 0,bilainStat = 0;
+        $.each(contacts, function (index, contact) {
+            if (contact.operator == '050') {
+                mtcStat++;
+            };
+            if (contact.operator == '093') {
+                lifeStat++;
+            };
+            if (contact.operator == '067') {
+                kiivstarStat++;
+            };
+            if (contact.operator == '068') {
+                bilainStat++;
+            };
+        });
+        $('.blockFormStatistic .mtcStat').text(mtcStat);
+        $('.blockFormStatistic .lifeStat').text(lifeStat);
+        $('.blockFormStatistic .kiivstarStat').text(kiivstarStat);
+        $('.blockFormStatistic .bilainStat').text(bilainStat);
+
+        $('.blockFormStatistic') .fadeIn();
+        $('.blockFormStatistic').animate({
+            'top': 150
+        },'fast');
+    });
 
     // Поиск
     $('.search-query').keyup(function () {
@@ -179,7 +224,7 @@ $(document).ready(function () {
         if (searchValue == '') {
             $.each(contacts, function (index, contact) {
                 contact.visible = true;
-            })
+            });
         } else {
             $.each(contacts, function (index, contact) {
                 if (contact.firstName.indexOf(searchValue)>=0 || contact.lastName.indexOf(searchValue)>=0 || contact.operator.indexOf(searchValue)>=0 || contact.phoneNumber.indexOf(searchValue)>=0) {
@@ -188,11 +233,10 @@ $(document).ready(function () {
                 } else {
                     contact.visible = false;
                 };
-            })
+            });
         };
         showContacts();
-    })
+    });
 
-
-
-})
+    
+});

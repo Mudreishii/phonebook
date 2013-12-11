@@ -56,10 +56,11 @@ html,body {
     border-radius: 5px;
 }
 
-.blockFormAddContact, .blockFormRedact {
+.blockFormAddContact, .blockFormRedact, .blockFormStatistic {
     position: absolute;
     top: 0px;
     left: 40%;
+    background-color: white;
     display: none;
 }
 .btn-block .btn-danger {
