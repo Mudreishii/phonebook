@@ -2,178 +2,164 @@
 <html>
 <head>
 <title>Phone Book</title>
-  <link rel="stylesheet" type="text/css" href="phonebook.css" />
+  <link rel="stylesheet" type="text/css" href="bootstrap.css" />
   <script type="text/javascript" src="jquery-1.9.1.min.js"></script>
   <script type="text/javascript" src="phonebook.js"></script>
-  <link rel="stylesheet" type="text/css" href="bootstrap.css" />
+  <link rel="stylesheet" type="text/css" href="phonebook.css" />
 </head>
 <body>
-
-<div class="container" >
-  <div class="clearfix">
-    <a href="#" class="btn btn-small add-contact pull-left"><i class="icon-user"></i> Add New</a>
-    <a href="#" class="btn btn-small show-statistics pull-right"><i class="icon-list-alt"></i> Show statistics</a>
-  </div>
-  <br />
-  <div class="table-contacts">
-    <table class="table table-striped table-bordered" >
-      <thead>
-        <tr>
-          <th>▼<span>First Name</span> </th>
-          <th>▼<span>Last Name</span> </th>
-          <th>▼<span>Operator</span> </th>
-          <th>▼<span>Phone Number</span> </th>
-          <th>▼<span>Action</span> </th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
-  <form class="form-search" action="">
-    <input type="text" class="search-query input-block-level" placeholder="Search">
-  </form><br><br>
-</div>
-
-<!-- ДОБАВЛЕНИЕ КОНТАКТА - не видимо -->
-<div class="blockFormAddContact">
-  <div class="block-form-horizontal" id="edd-block-form-horizontal">
-
-    <div class="shapka"> 
-      <a href="#" class="btn btn-inverse btn-mini button-krest pull-left"><i class="icon-white icon-remove"></i></a>
-      Phone book
+  <div class="container" >
+    <div class="clearfix">
+      <a href="#" class="btn btn-small add-contact pull-left"><i class="icon-user"></i> Add New</a>
+      <a href="#" class="btn btn-small show-statistics pull-right"><i class="icon-list-alt"></i> Show statistics</a>
     </div>
-
-    <h4>Add New contact</h4>
-    <div class="bady-block">
-      <form class="form-horizontal addNewContact contact-form" action="">
-        <div class="control-group">
-          <label class="control-label">First Name</label>
-          <div class="controls">
-            <input type="text" name="first-name" class="input-block-level rere" placeholder="First Name">
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" >Last Name</label>
-          <div class="controls">
-            <input type="text" name="last-name" class="input-block-level" placeholder="Last Name">
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" >Operator</label>
-          <div class="controls">
-            <select class="input-block-level operator" name="operator">
-              <option value="50">МТС</option>
-              <option value="93">life:)</option>
-              <option value="67">Киивстар</option>
-              <option value="68">Билайн</option>
-            </select>
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" >Phone</label>
-          <div class="controls">
-            <input type="text" name="phone-number" class="input-block-level phone-number" placeholder="Phone Number">
-          </div>
-        </div>
-        <input type="submit" class="btn btn-large btn-block btn-closest" value="Sign in">
-      </form>
-       
-    </div>
-  </div>
-</div>
-
-<!-- РЕДАКТИРОВАНИЕ ДАННЫХ - не видимо  -->
-<div class="blockFormRedact">
-  <div class="block-form-horizontal" id="block-form-horizontal-redact">
-
-    <div class="shapka"> 
-      <a href="#" class="btn btn-inverse btn-mini button-krest pull-left"><i class="icon-white icon-remove"></i></a>
-      Phone book
-    </div>
-
-    <h4>Edit profile</h4>
-    <div class="bady-block">
-      <form class="form-horizontal contact-form" action="">
-        <div class="control-group">
-          <label class="control-label" >First Name</label>
-          <div class="controls">
-            <input type="text" name="first-name" class="input-block-level first-name">
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" >Last Name</label>
-          <div class="controls">
-            <input type="text" name="last-name" class="input-block-level last-name">
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" >Operator</label>
-          <div class="controls">
-            <select class="input-block-level operator" name="operator">
-              <option value="50">МТС</option>
-              <option value="93">life:)</option>
-              <option value="67">Киивстар</option>
-              <option value="68">Билайн</option>
-            </select>
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" >Phone</label>
-          <div class="controls">
-            <input type="text" name="phone-number" class="input-block-level phone-number">
-          </div>
-        </div>
-        <div class="control-group">
-          <input class="btn btn-large btn-block" type="submit" value="Edit" />
-      </div>
-      </form>
-       
-    </div>
-  </div>
-</div>
-
-<!-- Статистика -->
-<div class="blockStatistic">
-  <div class="block-form-horizontal" id="block-form-horizontal-redact">
-
-    <div class="shapka"> 
-      <a href="#" class="btn btn-inverse btn-mini button-krest pull-left"><i class="icon-white icon-remove"></i></a>
-      Phone book
-    </div>
-
-    <h4>Statistic</h4>
-    <div class="bady-block">
-      <table class="table">
+    <br />  <!-- этот br делает ровно такой отступ который мне нужен -->
+    <div class="show-contacts">
+      <table class="table table-striped table-bordered" >
         <thead>
           <tr>
-            <th>Оператор</th>
-            <th>Контакты</th>
+            <th>▼<span>First Name</span> </th>
+            <th>▼<span>Last Name</span> </th>
+            <th>▼<span>Operator</span> </th>
+            <th>▼<span>Phone Number</span> </th>
+            <th>▼<span>Action</span> </th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>МТС</td>
-            <td class="mtcStat"></td>
-          </tr>
-          <tr>
-            <td>life:)</td>
-            <td class="lifeStat"></td>
-          </tr>
-          <tr>
-            <td>Киивстар</td>
-            <td class="kiivstarStat"></td>
-          </tr>
-          <tr>
-            <td>Билайн</td>
-            <td class="bilainStat"></td>
-          </tr>
-
-        </tbody>
+        <tbody></tbody>
       </table>
-       
+    </div>
+    <form class="form-search" action="">
+      <input type="text" class="search-query input-block-level" placeholder="Search">
+    </form><br><br>
+  </div>
+
+  <!-- ДОБАВЛЕНИЕ КОНТАКТА - не видимо -->
+  <div class="block-form-add-contact">
+    <div class="block-form-horizontal edd-block-form-horizontal">
+      <h1 class="shapka"> 
+        <a href="#" class="btn btn-inverse btn-mini button-krest pull-left"><i class="icon-white icon-remove"></i></a>
+        Phone book
+      </h1>
+      <h4>Add New contact</h4>
+        <form class="form-horizontal add-new-contact contact-form" action="">
+          <div class="control-group">
+            <label class="control-label">First Name</label>
+            <div class="controls">
+              <input type="text" name="first-name" class="input-block-level" placeholder="First Name">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" >Last Name</label>
+            <div class="controls">
+              <input type="text" name="last-name" class="input-block-level" placeholder="Last Name">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" >Operator</label>
+            <div class="controls">
+              <select class="input-block-level" name="operator">
+                <option value="50">МТС</option>
+                <option value="93">life:)</option>
+                <option value="67">Киевстар</option>
+                <option value="68">Билайн</option>
+              </select>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Phone</label>
+            <div class="controls">
+              <input type="text" name="phone-number" class="input-block-level" placeholder="Phone Number">
+            </div>
+          </div>
+          <input type="submit" class="btn btn-large btn-block btn-closest" value="Sign in">
+        </form>
     </div>
   </div>
-</div>
+
+  <!-- РЕДАКТИРОВАНИЕ ДАННЫХ - не видимо  -->
+  <div class="block-form-redact">
+    <div class="block-form-horizontal block-form-horizontal-redact">
+
+      <h1 class="shapka"> 
+        <a href="#" class="btn btn-inverse btn-mini button-krest pull-left"><i class="icon-white icon-remove"></i></a>
+        Phone book
+      </h1>
+      <h4>Edit profile</h4>
+        <form class="form-horizontal contact-form" action="">
+          <div class="control-group">
+            <label class="control-label" >First Name</label>
+            <div class="controls">
+              <input type="text" name="first-name" class="input-block-level first-name">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" >Last Name</label>
+            <div class="controls">
+              <input type="text" name="last-name" class="input-block-level last-name">
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" >Operator</label>
+            <div class="controls">
+              <select class="input-block-level" name="operator">
+                <option value="50">МТС</option>
+                <option value="93">life:)</option>
+                <option value="67">Киевстар</option>
+                <option value="68">Билайн</option>
+              </select>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Phone</label>
+            <div class="controls">
+              <input type="text" name="phone-number" class="input-block-level">
+            </div>
+          </div>
+          <div class="control-group">
+            <input class="btn btn-large btn-block" type="submit" value="Edit"/>
+        </div>
+        </form>
+    </div>
+  </div>
+
+  <!-- Статистика -->
+  <div class="block-statistic">
+    <div class="block-form-horizontal block-form-horizontal-redact">
+      <h1 class="shapka"> 
+        <a href="#" class="btn btn-inverse btn-mini button-krest pull-left"><i class="icon-white icon-remove"></i></a>
+        Phone book
+      </h1>
+      <h4>Statistic</h4>
+      <div class="bady-block">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Оператор</th>
+              <th>Контакты</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>МТС</td>
+              <td class="mtc-stat"></td>
+            </tr>
+            <tr>
+              <td>life:)</td>
+              <td class="life-stat"></td>
+            </tr>
+            <tr>
+              <td>Киевстар</td>
+              <td class="kiivstar-stat"></td>
+            </tr>
+            <tr>
+              <td>Билайн</td>
+              <td class="bilain-stat"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
 
 

@@ -8,7 +8,7 @@ $(document).ready(function () {
 
     // Вывод контактов - function
     function showContacts() {
-        $('.table-contacts .table tbody').empty();
+        $('.show-contacts .table tbody').empty();
         $.each(contacts, function (index, contact) {
             if (contact.visible) {
                 var blockKnopok = $("<div>").addClass('btn-block');
@@ -30,7 +30,7 @@ $(document).ready(function () {
                 tr.append(tdPhoneNumber);
                 tr.append(tdAction);
 
-                $('.table-contacts .table tbody').append(tr);
+                $('.show-contacts .table tbody').append(tr);
             };
         });
     };
@@ -84,21 +84,21 @@ $(document).ready(function () {
 
     // Открытие формы добовления контакта
     $('.add-contact').click(function () {
-        $('.blockFormAddContact .addNewContact input[name=first-name], input[name=last-name], input[name=phone-number]').val('');
-        $('.blockFormAddContact').fadeIn();
-        $('.blockFormAddContact').animate({
+        $('.block-form-add-contact .add-new-contact input[name=first-name], input[name=last-name], input[name=phone-number]').val('');
+        $('.block-form-add-contact').fadeIn();
+        $('.block-form-add-contact').animate({
             'top': 150
         },'fast'); 
     });
 
     // Создание пользователя
-    $('.blockFormAddContact .contact-form').submit( function (event) {
+    $('.block-form-add-contact .contact-form').submit( function (event) {
         event.preventDefault();
 
-        var firstName = $('.blockFormAddContact input[name=first-name]').val();
-        var lastName = $('.blockFormAddContact input[name=last-name]').val();
-        var operator = $('.blockFormAddContact select[name=operator]').val();   
-        var phoneNumber = $('.blockFormAddContact input[name=phone-number]').val();
+        var firstName = $('.block-form-add-contact input[name=first-name]').val();
+        var lastName = $('.block-form-add-contact input[name=last-name]').val();
+        var operator = $('.block-form-add-contact select[name=operator]').val();   
+        var phoneNumber = $('.block-form-add-contact input[name=phone-number]').val();
         
         if (!firstName) {
             alert('Введите имя');
@@ -137,52 +137,52 @@ $(document).ready(function () {
                 visible: true
             });
         };
-        $(".blockFormAddContact").animate({
+        $(".block-form-add-contact").animate({
             'top': 0
         },'fast').fadeOut();
     });
 
     // Открытие и закрытие формы редактирования контакта
     // Открытие
-    $('body').on('click', '.table-contacts .table .btn-edit-contact', function (e) {
-        $('.blockFormRedact').fadeIn();
-        $('.blockFormRedact').animate({
+    $('body').on('click', '.show-contacts .table .btn-edit-contact', function (e) {
+        $('.block-form-redact').fadeIn();
+        $('.block-form-redact').animate({
             'top': 150
         });
         var oldPhoneNumber = $(e.currentTarget).closest('tr').find('.phone-number').text();
         $.each(contacts, function (index, contact) {
             if (contact.phoneNumber==oldPhoneNumber) {
-                $('.blockFormRedact input[name=first-name]').val(contact.firstName);
-                $('.blockFormRedact input[name=last-name]').val(contact.lastName);
-                $('.blockFormRedact select[name=operator]').val(contact.operator); 
-                $('.blockFormRedact input[name=phone-number]').val(contact.phoneNumber);
+                $('.block-form-redact input[name=first-name]').val(contact.firstName);
+                $('.block-form-redact input[name=last-name]').val(contact.lastName);
+                $('.block-form-redact select[name=operator]').val(contact.operator); 
+                $('.block-form-redact input[name=phone-number]').val(contact.phoneNumber);
             };
         });
         rememberPhone = oldPhoneNumber;
     });
     // Закрытие
     $('body').on('click', '.button-krest', function () {
-        $(".blockFormAddContact, .blockFormRedact, .blockStatistic").animate({
+        $(".block-form-add-contact, .block-form-redact, .block-statistic").animate({
             'top': 0
         },'fast').fadeOut();
     });
 
     // Редактирование контакта
-    $('.blockFormRedact .contact-form').submit(function (event) {
+    $('.block-form-redact .contact-form').submit(function (event) {
         event.preventDefault();
         edit(rememberPhone, {
-            firstName: $('.blockFormRedact input[name=first-name]').val(),
-            lastName: $('.blockFormRedact input[name=last-name]').val(),
-            operator: $('.blockFormRedact select[name=operator]').val(),
-            phoneNumber: $('.blockFormRedact input[name=phone-number]').val()
+            firstName: $('.block-form-redact input[name=first-name]').val(),
+            lastName: $('.block-form-redact input[name=last-name]').val(),
+            operator: $('.block-form-redact select[name=operator]').val(),
+            phoneNumber: $('.block-form-redact input[name=phone-number]').val()
         });
-        $(".blockFormRedact").animate({
+        $(".block-form-redact").animate({
             'top': 0
         },'fast').fadeOut();
     });
 
     // Удоление контакта
-    $('body').on('click', '.table-contacts .button-remove', function (e) {
+    $('body').on('click', '.show-contacts .button-remove', function (e) {
         var $target = $(e.currentTarget);
         var phoneNumber = $target.closest('tr').data("id");
         console.log(phoneNumber);
@@ -199,13 +199,13 @@ $(document).ready(function () {
         $.each(contacts, function (index, contact) {
             stat[contact.operator]++;
         });
-        $('.blockStatistic .mtcStat').text(stat[50]);
-        $('.blockStatistic .lifeStat').text(stat[93]);
-        $('.blockStatistic .kiivstarStat').text(stat[67]);
-        $('.blockStatistic .bilainStat').text(stat[68]);
+        $('.block-statistic .mtc-stat').text(stat[50]);
+        $('.block-statistic .life-stat').text(stat[93]);
+        $('.block-statistic .kiivstar-stat').text(stat[67]);
+        $('.block-statistic .bilain-stat').text(stat[68]);
 
-        $('.blockStatistic') .fadeIn();
-        $('.blockStatistic').animate({
+        $('.block-statistic') .fadeIn();
+        $('.block-statistic').animate({
             'top': 150
         },'fast');
     });
