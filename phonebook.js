@@ -1,70 +1,6 @@
 $(document).ready(function () {
 
-    // Добовление контакта - function
-    function add(newContact) {
-        contacts.push(newContact);
-        showContacts();
-    };
-
-    // Вывод контактов - function
-    function showContacts() {
-        $('.show-contacts .table tbody').empty();
-        $.each(contacts, function (index, contact) {
-            if (contact.visible) {
-                var blockKnopok = $("<div>").addClass('btn-block');
-                var buttonEdit = $("<button>").addClass('btn btn-success button-success btn-edit-contact').text('Edit');
-                var buttonDelit = $("<button>").addClass('btn btn-danger button-remove').text('Delete');
-                blockKnopok.append(buttonEdit);
-                blockKnopok.append(buttonDelit);
-
-                var tr = $("<tr>").data("id",contact.phoneNumber);
-                var tdFirstName = $("<td>").text(contact.firstName);
-                var tdLastName = $("<td>").text(contact.lastName);
-                var tdOperator = $("<td>").text(contact.operator);
-                var tdPhoneNumber = $("<td>").addClass('phone-number').text(contact.phoneNumber);
-                var tdAction = $("<td>").append(blockKnopok);
-
-                tr.append(tdFirstName);
-                tr.append(tdLastName);
-                tr.append(tdOperator);
-                tr.append(tdPhoneNumber);
-                tr.append(tdAction);
-
-                $('.show-contacts .table tbody').append(tr);
-            };
-        });
-    };
-
-    // Удоление контакта - function
-    function remove(telephone) {
-        var indexDelit;
-        $.each(contacts, function (index, contact) {
-            if (contact.phoneNumber == telephone) {
-                indexDelit = index;
-            };
-        });
-        contacts.splice(indexDelit, 1);
-        showContacts();
-    };
-
-    // Телефон редактируемого контакта
-    var rememberPhone;
-
-    // Редактирование контакта - function
-    function edit(oldPhone, newContact) {
-        console.log(newContact.phoneNumber);
-        $.each(contacts, function (index, contact) {  
-            if (contact.phoneNumber == oldPhone) {
-                contact.firstName = newContact.firstName;
-                contact.lastName = newContact.lastName;
-                contact.operator = newContact.operator;
-                contact.phoneNumber = newContact.phoneNumber;
-            };
-        });
-        showContacts();
-    };
-
-
+    // Обьявление коллекции
     var contacts = [{
         firstName: "Дима",
         lastName: "Белов",
@@ -79,12 +15,63 @@ $(document).ready(function () {
         visible: true
     }];
 
+    // Добовление контакта - function
+    function add(newContact) {
+        contacts.push(newContact);
+        showContacts();
+    };
+
+    // Вывод контактов - function
+    function showContacts() {
+        $('.show-contacts .table tbody').empty();
+        $.each(contacts, function (index, contact) {
+            if (contact.visible) {
+                var blockKnopok = $("<div>").addClass('btn-block');
+                $("<button>").addClass('btn btn-success button-success btn-edit-contact').text('Edit').appendTo(blockKnopok);
+                $("<button>").addClass('btn btn-danger button-remove').text('Delete').appendTo(blockKnopok);
+
+                var tr = $("<tr>").data("id",contact.phoneNumber);
+                $("<td>").text(contact.firstName).appendTo(tr);
+                $("<td>").text(contact.lastName).appendTo(tr);
+                $("<td>").text(contact.operator).appendTo(tr);
+                $("<td>").text(contact.phoneNumber).appendTo(tr);
+                $("<td>").append(blockKnopok).appendTo(tr);
+                $('.show-contacts .table tbody').append(tr);
+            };
+        });
+    };
+
+    // Удоление контакта - function
+    function remove(telephone) {
+        $.each(contacts, function (index, contact) {
+            if (contact.phoneNumber == telephone) {
+                contacts.splice(index, 1);
+                return false;
+            };
+        });
+        showContacts();
+    };
+
+    // Редактирование контакта - function
+    function edit(oldPhone, newContact) {
+        $.each(contacts, function (index, contact) {  
+            if (contact.phoneNumber == oldPhone) {
+                contact.firstName = newContact.firstName;
+                contact.lastName = newContact.lastName;
+                contact.operator = newContact.operator;
+                contact.phoneNumber = newContact.phoneNumber;
+            };
+        });
+        showContacts();
+    };
+
     // Вывод контактов
     showContacts(); 
 
     // Открытие формы добовления контакта
     $('.add-contact').click(function () {
-        $('.block-form-add-contact .add-new-contact input[name=first-name], input[name=last-name], input[name=phone-number]').val('');
+        $('.block-form-add-contact .add-new-contact input').val('');
+        $('.block-form-add-contact .add-new-contact input[type=submit]').val('Sign in');
         $('.block-form-add-contact').fadeIn();
         $('.block-form-add-contact').animate({
             'top': 150
@@ -149,16 +136,17 @@ $(document).ready(function () {
         $('.block-form-redact').animate({
             'top': 150
         });
-        var oldPhoneNumber = $(e.currentTarget).closest('tr').find('.phone-number').text();
+        var oldPhoneNumber = $(e.currentTarget).closest('tr').data("id");
         $.each(contacts, function (index, contact) {
             if (contact.phoneNumber==oldPhoneNumber) {
                 $('.block-form-redact input[name=first-name]').val(contact.firstName);
                 $('.block-form-redact input[name=last-name]').val(contact.lastName);
                 $('.block-form-redact select[name=operator]').val(contact.operator); 
                 $('.block-form-redact input[name=phone-number]').val(contact.phoneNumber);
+                $('.block-form-redact input[name=hidden-phone]').val(contact.phoneNumber);
+                return false;
             };
         });
-        rememberPhone = oldPhoneNumber;
     });
     // Закрытие
     $('body').on('click', '.button-krest', function () {
@@ -170,6 +158,7 @@ $(document).ready(function () {
     // Редактирование контакта
     $('.block-form-redact .contact-form').submit(function (event) {
         event.preventDefault();
+        var rememberPhone = $('.block-form-redact input[name=hidden-phone]').val();
         edit(rememberPhone, {
             firstName: $('.block-form-redact input[name=first-name]').val(),
             lastName: $('.block-form-redact input[name=last-name]').val(),
@@ -185,7 +174,6 @@ $(document).ready(function () {
     $('body').on('click', '.show-contacts .button-remove', function (e) {
         var $target = $(e.currentTarget);
         var phoneNumber = $target.closest('tr').data("id");
-        console.log(phoneNumber);
         remove(phoneNumber);
     });
 

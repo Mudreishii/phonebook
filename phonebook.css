@@ -32,7 +32,12 @@ html,body {
     border: solid thin silver;
     border-radius: 0.5em;
 }
+.shapka h4 {
+    display: inline-block;
+    margin: 0px 0px;
+}
 .show-contacts{
+    margin-top: 20px;
     height: 80%;
     overflow: auto;
 }
