@@ -1,7 +1,7 @@
 $(document).ready(function () {
-    
+
     // Переключатель сортировки операторов
-    var click = 0;
+    var click = true;
 
     // Обьявление коллекции
     var contacts = [{
@@ -66,6 +66,34 @@ $(document).ready(function () {
             };
         });
         showContacts();
+    };
+
+    // Сортировка - function
+    function sortContakts (sortBy) {
+        if (click) {
+            for (var i = 0; i < contacts.length; i++) {
+                for (var v = i; v < contacts.length; v++) {
+                    if (contacts[i][sortBy] > contacts[v][sortBy]) {
+                        var a = contacts[i];
+                        contacts[i] = contacts[v];
+                        contacts[v] = a;
+                    };
+                };
+            };
+            click = false;
+        } else {
+            for (var i = 0; i < contacts.length; i++) {
+                for (var v = i; v < contacts.length; v++) {
+                    if (contacts[i][sortBy] < contacts[v][sortBy]) {
+                        var a = contacts[i];
+                        contacts[i] = contacts[v];
+                        contacts[v] = a;
+                    };
+                };
+            };
+            click = true;
+        };
+        showContacts(); 
     };
 
     // Вывод контактов
@@ -223,43 +251,22 @@ $(document).ready(function () {
     });
 
     // Сортировка
-    $('.sort-operator').click(function () {
-        if (click==0) {
-            for (var i = 0; i < contacts.length; i++) {
-                for (var v = i; v < contacts.length; v++) {
-                    if (contacts[i]['operator'] > contacts[v]['operator']) {
-                        var a = contacts[i];
-                        contacts[i] = contacts[v];
-                        contacts[v] = a;
-                    };
-                };
-            };
-            click++;
-        } else {
-            for (var i = 0; i < contacts.length; i++) {
-                for (var v = i; v < contacts.length; v++) {
-                    if (contacts[i]['operator'] < contacts[v]['operator']) {
-                        var a = contacts[i];
-                        contacts[i] = contacts[v];
-                        contacts[v] = a;
-                    };
-                };
-            };
-            click--;
-        };
-        showContacts(); 
-    });
+    // По имени
+    $('.sort-first-name').click(function () {
+        var sortBy = "firstName";
+        sortContakts(sortBy);
+    })
+    // По фамилии
+    $('.sort-last-name').click(function () {
+        var sortBy = "lastName";
+        sortContakts(sortBy);
+    })
+    // По оператору
+    $('.sort-operator').click( function () {
+        var sortBy = "operator";
+        sortContakts(sortBy);
+     });
 
-    // var mas = [6,2,5,502,1,3,9,8,15,1];
-    // for (var a = 0; a < mas.length; a++) {
-    //     for (var b = a; b < mas.length; b++) {
-    //         if (mas[a]>mas[b]) {
-    //             var a1 = mas[a];
-    //             var b1 = mas[b];
-    //             mas[a] = b1; mas[b] = a1;
-    //         };
-    //     };
-    // };
-    // console.log(mas)
+
 });
 
