@@ -34,10 +34,10 @@ html,body {
 }
 .shapka h4 {
     display: inline-block;
-    margin: 0px 0px;
+    margin: 0px;
 }
 .show-contacts{
-    margin-top: 20px;
+    margin-top: 2%;
     height: 80%;
     overflow: auto;
 }
