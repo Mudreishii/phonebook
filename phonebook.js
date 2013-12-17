@@ -1,4 +1,7 @@
 $(document).ready(function () {
+    
+    // Переключатель сортировки операторов
+    var click = 0;
 
     // Обьявление коллекции
     var contacts = [{
@@ -220,40 +223,43 @@ $(document).ready(function () {
     });
 
     // Сортировка
-    $('.sort-op').click(function () {
-        for (var i = 0; i < contacts.length; i++) {
-            for (var v = 0; v < contacts.length; v++) {
-                if (contacts[i]['operator'] < contacts[v]['operator']) {
-                    var firstName = contacts[i]['firstName'];
-                    var lastName = contacts[i]['lastName'];
-                    var operator = contacts[i]['operator'];
-                    var phoneNumber = contacts[i]['phoneNumber'];
-
-                    contacts[i]['firstName'] = contacts[v]['firstName'];
-                    contacts[i]['lastName'] = contacts[v]['lastName'];
-                    contacts[i]['operator'] = contacts[v]['operator'];
-                    contacts[i]['phoneNumber'] = contacts[v]['phoneNumber'];
-
-                    contacts[v]['firstName'] = firstName;
-                    contacts[v]['lastName'] = lastName;
-                    contacts[v]['operator'] = operator;
-                    contacts[v]['phoneNumber'] = phoneNumber;
-                    
-                    showContacts();
+    $('.sort-operator').click(function () {
+        if (click==0) {
+            for (var i = 0; i < contacts.length; i++) {
+                for (var v = i; v < contacts.length; v++) {
+                    if (contacts[i]['operator'] > contacts[v]['operator']) {
+                        var a = contacts[i];
+                        contacts[i] = contacts[v];
+                        contacts[v] = a;
+                    };
                 };
             };
+            click++;
+        } else {
+            for (var i = 0; i < contacts.length; i++) {
+                for (var v = i; v < contacts.length; v++) {
+                    if (contacts[i]['operator'] < contacts[v]['operator']) {
+                        var a = contacts[i];
+                        contacts[i] = contacts[v];
+                        contacts[v] = a;
+                    };
+                };
+            };
+            click--;
         };
+        showContacts(); 
     });
 
     // var mas = [6,2,5,502,1,3,9,8,15,1];
     // for (var a = 0; a < mas.length; a++) {
-    //     for (var b = 0; b < mas.length; b++) {
-    //         if (mas[a]<mas[b]) {
+    //     for (var b = a; b < mas.length; b++) {
+    //         if (mas[a]>mas[b]) {
     //             var a1 = mas[a];
     //             var b1 = mas[b];
     //             mas[a] = b1; mas[b] = a1;
     //         };
     //     };
     // };
+    // console.log(mas)
 });
 
