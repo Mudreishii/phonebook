@@ -251,21 +251,12 @@ $(document).ready(function () {
     });
 
     // Сортировка
-    // По имени
-    $('.sort-first-name').click(function () {
-        var sortBy = "firstName";
-        sortContakts(sortBy);
-    })
-    // По фамилии
-    $('.sort-last-name').click(function () {
-        var sortBy = "lastName";
-        sortContakts(sortBy);
-    })
-    // По оператору
-    $('.sort-operator').click( function () {
-        var sortBy = "operator";
-        sortContakts(sortBy);
-     });
+    $('.show-contacts .table th').click(function (e) {
+        var target = $(e.currentTarget);
+        target.toggleClass('desc');
+        var sort = $(this).data("sort");
+        sortContakts(sort);
+    });
 
 
 });

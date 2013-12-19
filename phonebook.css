@@ -44,6 +44,18 @@ html,body {
 .show-contacts thead tr{
     font-size: smaller;
 }
+.down-arrow {
+    display: inline;
+}
+.up-arrow {
+    display: none;
+}
+.desc .down-arrow {
+    display: none;
+}
+.desc .up-arrow {
+    display: inline;
+}
 .form-horizontal {
     padding: 0.5em 1.5em;
 }
