@@ -3,17 +3,17 @@ html,body {
     height: 100%;
 }
 .block-form-horizontal .shapka {
-    margin-top: 0px;
-    height: 32px;
-    line-height: 32px;
     background-color: silver;
     font-size: larger;
+    height: 32px;
+    line-height: 32px;
+    margin-top: 0px;
 }
 .block-form-horizontal .shapka .button-krest{
     display: inline-block;
     height: 18px;
-    width: 18px;
     margin: 7px;
+    width: 18px;
 }
 .block-form-horizontal h4 {
     text-align: center;
@@ -26,29 +26,24 @@ html,body {
 }
 .block-form, .block-redact {
     background-color: white;
+    border-radius: 0.5em;
+    border: solid thin silver;
+    left: 40%;
     position: absolute;
     top: 0;
+}
+.block-form-add-contact, .block-form-redact, .block-statistic {
+    background-color: white;
+    display: none;
     left: 40%;
-    border: solid thin silver;
-    border-radius: 0.5em;
+    top: 0px;
+    position: absolute;
 }
-.shapka h4 {
-    display: inline-block;
-    margin: 0px;
-}
-.show-contacts{
-    margin-top: 2%;
-    height: 80%;
-    overflow: auto;
-}
-.show-contacts thead tr{
-    font-size: smaller;
+.btn-block .btn-danger {
+    margin-left: 5px;
 }
 .down-arrow {
     display: inline;
-}
-.up-arrow {
-    display: none;
 }
 .desc .down-arrow {
     display: none;
@@ -56,22 +51,31 @@ html,body {
 .desc .up-arrow {
     display: inline;
 }
+.edd-block-form-horizontal, .block-form-horizontal-redact{
+    border-radius: 0.5em;
+    border: solid thin silver;
+    width: 300px;
+}
+.shapka h4 {
+    display: inline-block;
+    margin: 0px;
+}
+.show-contacts{
+    height: 80%;
+    margin-top: 1em;
+    overflow: auto;
+}
+.show-contacts thead tr{
+    font-size: smaller;
+}
 .form-horizontal {
     padding: 0.5em 1.5em;
 }
-.block-form-add-contact, .block-form-redact, .block-statistic {
-    position: absolute;
-    top: 0px;
-    left: 40%;
-    background-color: white;
+.up-arrow {
     display: none;
 }
-.btn-block .btn-danger {
-    margin-left: 5px;
-}
-.edd-block-form-horizontal, .block-form-horizontal-redact{
-    width: 300px;
-    border: solid thin silver;
-    border-radius: 0.5em;
-}
+
+
+
+
 

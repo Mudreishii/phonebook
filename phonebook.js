@@ -218,10 +218,10 @@ $(document).ready(function () {
         $.each(contacts, function (index, contact) {
             stat[contact.operator]++;
         });
-        $('.block-statistic .mtc-stat').text(stat[50]);
+        $('.block-statistic .mts-stat').text(stat[50]);
         $('.block-statistic .life-stat').text(stat[93]);
-        $('.block-statistic .kiivstar-stat').text(stat[67]);
-        $('.block-statistic .bilain-stat').text(stat[68]);
+        $('.block-statistic .kyivstar-stat').text(stat[67]);
+        $('.block-statistic .beeline-stat').text(stat[68]);
 
         $('.block-statistic') .fadeIn();
         $('.block-statistic').animate({
