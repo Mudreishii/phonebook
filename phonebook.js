@@ -69,7 +69,7 @@ $(document).ready(function () {
     };
 
     // Сортировка - function
-    function sortContakts (sortBy) {
+    function sortContacts (sortBy) {
         if (click) {
             for (var i = 0; i < contacts.length; i++) {
                 for (var v = i; v < contacts.length; v++) {
@@ -252,10 +252,9 @@ $(document).ready(function () {
 
     // Сортировка
     $('.show-contacts .table th').click(function (e) {
-        var target = $(e.currentTarget);
-        target.toggleClass('desc');
+        $(this).toggleClass('desc');
         var sort = $(this).data("sort");
-        sortContakts(sort);
+        sortContacts(sort);
     });
 
 
