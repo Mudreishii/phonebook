@@ -3,24 +3,21 @@ $(document).ready(function () {
     // Переключатель сортировки операторов
     var click = true;
 
-    // Обьявление коллекции
-    var contacts = [{
-        firstName: "Дима",
-        lastName: "Белов",
-        operator: "93",
-        phoneNumber: "0631346611",
-        visible: true
-    }, {
-        firstName: "Александр",
-        lastName: "Соловей",
-        operator: "67",
-        phoneNumber: "911",
-        visible: true
-    }];
+    // Массив контактов
+    var contacts = [];
 
+    // Локальное хранилище контактов
+    if (localStorage.contacts) {
+        var ollContacts = JSON.parse(localStorage.getItem('contacts'));
+        $.each(ollContacts, function (index, contact) {
+            contacts.push(contact);
+        });
+    };
+    
     // Добовление контакта - function
     function add(newContact) {
         contacts.push(newContact);
+        localStorage.setItem('contacts', JSON.stringify(contacts));
         showContacts();
     };
 
@@ -52,6 +49,7 @@ $(document).ready(function () {
                 return false;
             };
         });
+        localStorage.setItem('contacts', JSON.stringify(contacts));
         showContacts();
     };
 
@@ -65,6 +63,7 @@ $(document).ready(function () {
                 contact.phoneNumber = newContact.phoneNumber;
             };
         });
+        localStorage.setItem('contacts', JSON.stringify(contacts));
         showContacts();
     };
 
@@ -203,8 +202,8 @@ $(document).ready(function () {
 
     // Удоление контакта
     $('body').on('click', '.show-contacts .button-remove', function (e) {
-        var $target = $(e.currentTarget);
-        var phoneNumber = $target.closest('tr').data("id");
+        // var $target = $(e.currentTarget);
+        var phoneNumber = $(this).closest('tr').data("id");
         remove(phoneNumber);
     });
 
@@ -256,6 +255,8 @@ $(document).ready(function () {
         var sort = $(this).data("sort");
         sortContacts(sort);
     });
+
+
 
 
 });
