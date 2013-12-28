@@ -285,12 +285,12 @@ a:focus {
   margin-left: 20px;
 }
 
-.container,
+/*.container,
 .navbar-static-top .container,
 .navbar-fixed-top .container,
 .navbar-fixed-bottom .container {
   width: 100%;
-}
+}*/
 
 .span12 {
   width: 940px;

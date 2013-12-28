@@ -74,6 +74,11 @@ html,body {
 .up-arrow {
     display: none;
 }
+.not-found-contacts{
+    position: absolute;
+    top: 40%;
+    left: 40%;
+}
 
 
 

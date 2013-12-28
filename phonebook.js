@@ -7,14 +7,11 @@ $(document).ready(function () {
     var contacts = [];
 
     // Локальное хранилище контактов
-    if (localStorage.contacts) {
-        var ollContacts = JSON.parse(localStorage.getItem('contacts'));
-        $.each(ollContacts, function (index, contact) {
-            contacts.push(contact);
-        });
+    if (localStorage.getItem('contacts')) {
+        contacts = JSON.parse(localStorage.getItem('contacts'));
     };
     
-    // Добовление контакта - function
+    // Добавление контакта - function
     function add(newContact) {
         contacts.push(newContact);
         localStorage.setItem('contacts', JSON.stringify(contacts));
@@ -24,6 +21,11 @@ $(document).ready(function () {
     // Вывод контактов - function
     function showContacts() {
         $('.show-contacts .table tbody').empty();
+        if (contacts.length == 0) {
+            $('.not-found-contacts').fadeIn();
+        } else {
+            $('.not-found-contacts').fadeOut();
+        };
         $.each(contacts, function (index, contact) {
             if (contact.visible) {
                 var blockKnopok = $("<div>").addClass('btn-block');
@@ -69,29 +71,16 @@ $(document).ready(function () {
 
     // Сортировка - function
     function sortContacts (sortBy) {
-        if (click) {
-            for (var i = 0; i < contacts.length; i++) {
-                for (var v = i; v < contacts.length; v++) {
-                    if (contacts[i][sortBy] > contacts[v][sortBy]) {
-                        var a = contacts[i];
-                        contacts[i] = contacts[v];
-                        contacts[v] = a;
-                    };
+        for (var i = 0; i < contacts.length; i++) {
+            for (var v = i; v < contacts.length; v++) {
+                if (contacts[i][sortBy] > contacts[v][sortBy] == click) {
+                    var a = contacts[i];
+                    contacts[i] = contacts[v];
+                    contacts[v] = a;
                 };
             };
-            click = false;
-        } else {
-            for (var i = 0; i < contacts.length; i++) {
-                for (var v = i; v < contacts.length; v++) {
-                    if (contacts[i][sortBy] < contacts[v][sortBy]) {
-                        var a = contacts[i];
-                        contacts[i] = contacts[v];
-                        contacts[v] = a;
-                    };
-                };
-            };
-            click = true;
         };
+        click = !click;
         showContacts(); 
     };
 
